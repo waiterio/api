@@ -4,6 +4,7 @@ var router = Express.Router();
 var getCategories = require('./categories.get.js');
 var postCategories = require('./categories.post.js');
 var deleteCategories = require('./categories.delete.js');
+var putCategories = require('./categories.put.js');
 
 // GET Requests
 router.get('/', function(req, res) {
@@ -26,8 +27,7 @@ router.delete('/:id', function(req, res) {
 
 //PUT Requests
 router.put('/:id', function(req, res) {
-	//TODO: Create this endpoint
-	res.status(501).end();
+	putCategories.updateCategory(req, res);
 });
 
 

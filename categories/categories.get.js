@@ -18,7 +18,11 @@ module.exports.getCategory = function(req, res) {
 
 	Postgres.oneOrNone('SELECT * FROM categories WHERE id = $1', [ categoryId ])
 		.then(function(data) {
-			return res.json(data);
+			if(data !== null) {
+				return res.json(data);
+			} else {
+				return res.status(204).end();
+			}
 		})
 		.catch(function(error) {
 			return res.status(500).json(error);

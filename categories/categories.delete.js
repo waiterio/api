@@ -9,7 +9,9 @@ module.exports.removeCategory = function(req, res) {
 				return res.status(200).end();
 			})
 			.catch(function(error) {
-				return res.status(500).json({ success: false, 'message': error });
+				return res.status(500).json(error);
 			});
+	} else {
+		return res.status(411).end();
 	}
 };
