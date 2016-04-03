@@ -4,8 +4,8 @@
  * A - before the column that is to be sorted, indicates a descending
  * sort order, if there is no dash, ascending order will be used
  *
- * @returns string
  * @param sortQuery
+ * @returns {string}
  */
 module.exports.getOrderByQuery = function(sortQuery) {
 	if(typeof sortQuery !== 'undefined') {
@@ -33,5 +33,15 @@ module.exports.getOrderByQuery = function(sortQuery) {
 		}
 	}
 
-	return ' ORDER BY id DESC';
+	return ' ORDER BY id ASC';
+};
+
+
+/**
+ *
+ * @param limitNumber
+ * @returns {string}
+ */
+module.exports.getLimitQuery = function(limitNumber) {
+	return ' LIMIT ' + parseInt(limitNumber);
 };
