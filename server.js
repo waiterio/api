@@ -24,6 +24,6 @@ app.use(function(req, res) {
 
 // GET /resources could return a json of all the available endpoints
 
-app.listen(Settings.port, function() {
+app.listen(process.env.PORT || Settings.port, function() {
 	console.log('listening to connections on port ' + Settings.port);
 });
