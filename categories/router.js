@@ -16,7 +16,7 @@ router.get('/:id', function(req, res) {
 
 // POST Requests
 router.post('/', function(req, res) {
-	postCategories.addUser(req, res);
+	postCategories.addCategory(req, res);
 });
 
 // DELETE Requests
