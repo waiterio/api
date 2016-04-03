@@ -1,4 +1,4 @@
-const Postgres = require('../database/postgres.js').getConnection();
+const Postgres = require('../common/postgres.js').getConnection();
 const Crypt = require('bcrypt');
 const Settings = require('../settings.js');
 

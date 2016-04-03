@@ -1,4 +1,4 @@
-const Postgres = require('../database/postgres.js').getConnection();
+const Postgres = require('../common/postgres.js').getConnection();
 
 module.exports.addCategory = function(req, res) {
 	var name = req.body.name;

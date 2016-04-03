@@ -1,4 +1,4 @@
-const Postgres = require('../database/postgres.js').getConnection();
+const Postgres = require('../common/postgres.js').getConnection();
 
 module.exports.removeCategory = function(req, res) {
 	var categoryId = parseInt(req.params.id);

@@ -1,5 +1,5 @@
 const Crypt = require('bcrypt');
-const Postgres = require('../database/postgres.js').getConnection();
+const Postgres = require('../common/postgres.js').getConnection();
 
 module.exports.signIn = function(req, res) {
 	if(req.body.user != '' && req.body.password != '') {
