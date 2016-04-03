@@ -11,5 +11,7 @@ module.exports.deleteDish = function(req, res) {
 			.catch(function(error) {
 				return res.status(500).json({ success: false, 'message': error });
 			});
+	} else {
+		return res.status(411).end();
 	}
 };
