@@ -27,13 +27,13 @@ module.exports.addDish = function (req, res) {
 
     Postgres.one('INSERT INTO dishes (name, price, description, image, categories_id) VALUES ($1, $2, $3, $4, $5) RETURNING id', dishData)
         .then(function(data) {
-            return res.json([{
+            return res.json({
                 "id": data.id,
                 "name": name,
                 "price": price,
                 "description": description,
                 "image": image,
                 "categories_id": categories_id
-            }]);
+            });
         });
 };

@@ -33,5 +33,5 @@ module.exports.getOrderByQuery = function(sortQuery) {
 		}
 	}
 
-	return '';
+	return ' ORDER BY id DESC';
 };

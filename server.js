@@ -13,6 +13,7 @@ app.use(CrossOriginResourceSharing());
 // API Routes
 app.use('/api/dishes', require('./dishes/router.js'));
 app.use('/api/orders', require('./orders/router.js'));
+app.use('/api/categories', require('./categories/router.js'));
 app.use('/api/users',  require('./users/router.js'));
 
 // Default Route
