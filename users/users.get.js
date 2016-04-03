@@ -18,7 +18,11 @@ module.exports.getUser = function(req, res) {
 
 	Postgres.oneOrNone('SELECT id, username FROM users WHERE id = $1', [ userId ])
 		.then(function(data) {
-			return res.json(data);
+			if(data !== null) {
+				return res.json(data);
+			} else {
+				return res.status(204).end();
+			}
 		})
 		.catch(function(error) {
 			return res.status(500).json(error);

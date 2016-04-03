@@ -14,7 +14,6 @@ router.get('/:id', function(req, res) {
 	getUsers.getUser(req, res);
 });
 
-
 // POST Requests
 router.post('/', function(req, res) {
 	postUsers.addUser(req, res);

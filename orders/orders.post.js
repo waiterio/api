@@ -15,8 +15,8 @@ module.exports.addOrder = function(req, res) {
 	});
 
 	Postgres.query('WITH ordertable AS (INSERT INTO orders(tablenumber, ordertimestamp, notes) ' +
-					'VALUES(\'' + tablenumber + '\', now(), \'' + notes + '\') RETURNING id) ' +
-				   	'INSERT INTO orderitems(orders_id, dishes_id) VALUES ' + orderItemsQuery.join(', '))
+					'VALUES($1, now(), $2) RETURNING id) INSERT INTO orderitems(orders_id, dishes_id) VALUES ' +
+					orderItemsQuery.join(', '), [ tablenumber, notes ])
 		.then(function() {
 			return res.status(200).end();
 		})

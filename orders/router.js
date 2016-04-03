@@ -14,7 +14,6 @@ router.get('/:id', function(req, res) {
 	getOrders.getOrder(req, res);
 });
 
-
 // POST Requests
 router.post('/', function(req, res) {
 	postOrders.addOrder(req, res);
