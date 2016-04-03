@@ -1,5 +1,3 @@
-const Postgres = require('../common/postgres.js').getConnection();
-
 module.exports.addDish = function (req, res) {
 	//FIXME: remove sample vars
     var name = req.body.name || 'no name';
@@ -12,7 +10,7 @@ module.exports.addDish = function (req, res) {
 
 	//TODO: create a separate validation for queries like this with a return similar to the categories.post.js
 
-    Postgres.one('INSERT INTO dishes (name, price, description, image, categories_id) VALUES ($1, $2, $3, $4, $5) RETURNING id', dishData)
+	req.app.get('db').one('INSERT INTO dishes (name, price, description, image, categories_id) VALUES ($1, $2, $3, $4, $5) RETURNING id', dishData)
 		.then(function(returningId) {
 
 			return res.json(returningId);

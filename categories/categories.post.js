@@ -1,10 +1,8 @@
-const Postgres = require('../common/postgres.js').getConnection();
-
 module.exports.addCategory = function(req, res) {
 	var name = req.body.name;
 
 	if(typeof name !== 'undefined' && name !== '') {
-		Postgres.one('INSERT INTO categories (name) VALUES ($1) RETURNING id', [ name ])
+		req.app.get('db').one('INSERT INTO categories (name) VALUES ($1) RETURNING id', [ name ])
 			.then(function(returningId) {
 				return res.status(201).json(returningId);
 			})

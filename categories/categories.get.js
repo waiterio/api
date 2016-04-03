@@ -1,10 +1,9 @@
-const Postgres = require('../common/postgres.js').getConnection();
 const DBHelpers = require('../common/databaseHelpers.js');
 
 module.exports.getCategories = function(req, res) {
 	var orderBy = DBHelpers.getOrderByQuery(req.query.sort);
 
-	Postgres.query('SELECT * FROM categories' + orderBy)
+	req.app.get('db').query('SELECT * FROM categories' + orderBy)
 		.then(function(data) {
 			return res.json(data);
 		})
@@ -16,7 +15,7 @@ module.exports.getCategories = function(req, res) {
 module.exports.getCategory = function(req, res) {
 	var categoryId = parseInt(req.params.id);
 
-	Postgres.oneOrNone('SELECT * FROM categories WHERE id = $1', [ categoryId ])
+	req.app.get('db').oneOrNone('SELECT * FROM categories WHERE id = $1', [ categoryId ])
 		.then(function(data) {
 			if(data !== null) {
 				return res.json(data);

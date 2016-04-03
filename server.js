@@ -1,28 +1,30 @@
 const Express = require('express');
 const BodyParser = require('body-parser');
 const Compression = require('compression');
-const CrossOriginResourceSharing = require('cors');
+const CrossOrigin = require('cors');
 const Settings = require('./settings.js');
+const Postgres = require('./common/postgres.js');
 
 var app = Express();
 
+// Setting Global DB Object
+app.set('db', Postgres.getConnection());
+
 app.use(BodyParser.json());
 app.use(Compression());
-app.use(CrossOriginResourceSharing());
+app.use(CrossOrigin());
 
 // API Routes
 app.use('/api/dishes', require('./dishes/router.js'));
 app.use('/api/orders', require('./orders/router.js'));
+app.use('/api/users', require('./users/router.js'));
 app.use('/api/categories', require('./categories/router.js'));
-app.use('/api/users',  require('./users/router.js'));
 
 // Default Route
 app.use(function(req, res) {
 	res.status(404).end();
 });
 
-// GET /resources could return a json of all the available endpoints
-
 app.listen(process.env.PORT || Settings.port, function() {
-	console.log('listening to connections on port ' + Settings.port);
+	console.info('sharks with frickin\' laser beams attached to their heads');
 });

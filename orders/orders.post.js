@@ -1,5 +1,3 @@
-const Postgres = require('../common/postgres.js').getConnection();
-
 module.exports.addOrder = function(req, res) {
 	var notes = '';
 	var tablenumber = parseInt(req.body.tablenumber);
@@ -14,7 +12,7 @@ module.exports.addOrder = function(req, res) {
 		orderItemsQuery.push('((SELECT (id) FROM ordertable), ' + parseInt(value.dishes_id) + ')')
 	});
 
-	Postgres.query('WITH ordertable AS (INSERT INTO orders(tablenumber, ordertimestamp, notes) ' +
+	req.app.get('db').query('WITH ordertable AS (INSERT INTO orders(tablenumber, ordertimestamp, notes) ' +
 					'VALUES($1, now(), $2) RETURNING id) INSERT INTO orderitems(orders_id, dishes_id) VALUES ' +
 					orderItemsQuery.join(', '), [ tablenumber, notes ])
 		.then(function() {

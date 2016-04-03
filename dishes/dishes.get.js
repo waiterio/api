@@ -1,10 +1,9 @@
-const Postgres = require('../common/postgres.js').getConnection();
 const DBHelpers = require('../common/databaseHelpers.js');
 
 module.exports.getDishes = function(req, res) {
 	var orderBy = DBHelpers.getOrderByQuery(req.query.sort);
 
-	Postgres.query('SELECT * FROM dishes ' + orderBy)
+	req.app.get('db').query('SELECT * FROM dishes ' + orderBy)
 		.then(function(data) {
 			return res.json(data);
 		})
@@ -16,7 +15,7 @@ module.exports.getDishes = function(req, res) {
 module.exports.getDish = function(req, res) {
 	var dishId = parseInt(req.params.id);
 
-	Postgres.oneOrNone('SELECT * FROM dishes WHERE id = $1', [ dishId ])
+	req.app.get('db').oneOrNone('SELECT * FROM dishes WHERE id = $1', [ dishId ])
 		.then(function(data) {
 			if(data !== null) {
 				return res.json(data);

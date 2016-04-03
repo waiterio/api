@@ -1,10 +1,9 @@
-const Postgres = require('../common/postgres.js').getConnection();
 const DBHelpers = require('../common/databaseHelpers.js');
 
 module.exports.getOrders = function(req, res) {
 	var orderBy = DBHelpers.getOrderByQuery(req.query.sort);
 
-	Postgres.query('SELECT * FROM orders' + orderBy)
+	req.app.get('db').query('SELECT * FROM orders' + orderBy)
 		.then(function(data) {
 			return res.json(data);
 		})
@@ -16,7 +15,7 @@ module.exports.getOrders = function(req, res) {
 module.exports.getOrder = function(req, res) {
 	var orderId = parseInt(req.params.id);
 
-	Postgres.task(function(db) {
+	req.app.get('db').task(function(db) {
 		return db.batch([
 			db.oneOrNone('SELECT * FROM orders WHERE id = $1', [ orderId ]),
 			db.manyOrNone('SELECT orderitems.id, dishes.name, dishes.price, dishes.description, dishes.id as dishes_id ' +

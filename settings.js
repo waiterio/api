@@ -7,6 +7,7 @@ module.exports = {
         'port': 5432,
         'database': 'waiter',
         'user': 'waiter',
-        'password': 'waiter'
+        'password': 'waiter',
+		'ssl': false
     }
 };

@@ -1,5 +1,3 @@
-const Postgres = require('../common/postgres.js').getConnection();
-
 module.exports.replaceDish = function (req, res) {
     var dishesId = req.params.id;
 
@@ -11,7 +9,7 @@ module.exports.replaceDish = function (req, res) {
 	var categories_id = req.body.categories_id || 1;
 	var dishData = [name, price, description, image, categories_id, dishesId];
 
-    Postgres.none('UPDATE dishes SET (name, price, description, image, categories_id) = ($1, $2, $3, $4, $5) WHERE id = $6', dishData)
+	req.app.get('db').none('UPDATE dishes SET (name, price, description, image, categories_id) = ($1, $2, $3, $4, $5) WHERE id = $6', dishData)
         .then(function() {
 			return res.status(200).end();
 		})

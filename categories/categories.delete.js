@@ -1,10 +1,8 @@
-const Postgres = require('../common/postgres.js').getConnection();
-
 module.exports.removeCategory = function(req, res) {
 	var categoryId = parseInt(req.params.id);
 
 	if(categoryId !== 'NaN') {
-		Postgres.query('DELETE FROM categories WHERE id = $1', categoryId)
+		req.app.get('db').query('DELETE FROM categories WHERE id = $1', categoryId)
 			.then(function() {
 				return res.status(200).end();
 			})
