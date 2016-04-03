@@ -2,7 +2,7 @@ const Postgres = require('../database/postgres.js').getConnection();
 const DBHelpers = require('../common/databaseHelpers.js');
 
 module.exports.getOrders = function(req, res) {
-	var orderBy = DBHelpers.getOrderByQuery(req.query.sort.toString());
+	var orderBy = DBHelpers.getOrderByQuery(req.query.sort);
 
 	Postgres.query('SELECT * FROM orders' + orderBy)
 		.then(function(data) {

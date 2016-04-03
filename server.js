@@ -6,8 +6,6 @@ const Settings = require('./settings.js');
 
 var app = Express();
 
-//app.set('tokenSalt', Settings.tokenSalt);
-
 app.use(BodyParser.json());
 app.use(Compression());
 app.use(CrossOriginResourceSharing());
