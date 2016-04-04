@@ -36,6 +36,30 @@ module.exports.getOrderByQuery = function(sortQuery) {
 	return ' ORDER BY id ASC';
 };
 
+/**
+ *
+ * @param data
+ * @returns {object}
+ */
+module.exports.getInsertQueryData = function(data) {
+	var queryFields = [];
+	var queryValues = [];
+	var replacementVars = [];
+
+	if(typeof data !== 'undefined') {
+		var valueCounter = 1;
+		data.forEach(function(value) {
+			if(typeof value.input !== 'undefined') {
+				queryFields.push(value.field);
+				queryValues.push('$' + valueCounter);
+				valueCounter++;
+				replacementVars.push(value.input);
+			}
+		});
+	}
+
+	return { 'fieldQuery': '(' + queryFields.join() + ')', 'valueQuery': '(' + queryValues.join() + ')', 'vars': replacementVars };
+};
 
 /**
  *

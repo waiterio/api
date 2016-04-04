@@ -33,8 +33,8 @@ CREATE TABLE dishes (
   name          CHARACTER VARYING(255) NOT NULL,
   image         CHARACTER VARYING(255),
   price         INTEGER                NOT NULL,
-  description   TEXT                   NOT NULL,
-  categories_id INTEGER                NOT NULL
+  description   TEXT,
+  categories_id INTEGER
 );
 
 CREATE SEQUENCE dishes_id_seq

@@ -3,9 +3,13 @@ const DBHelpers = require('../common/databaseHelpers.js');
 module.exports.getUsers = function(req, res) {
 	var orderBy = DBHelpers.getOrderByQuery(req.query.sort);
 
-	req.app.get('db').query('SELECT id, username FROM users' + orderBy)
+	req.app.get('db').any('SELECT id, username FROM users' + orderBy)
 		.then(function(data) {
-			return res.json(data);
+			if(data !== null) {
+				return res.json(data);
+			} else {
+				return res.status(204).end();
+			}
 		})
 		.catch(function(error) {
 			return res.status(500).json(error);

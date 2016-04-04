@@ -1,19 +1,32 @@
+const Validator = require('../common/validator.js');
+const DBHelpers = require('../common/databaseHelpers.js');
+
+// NOTE: this is actually more like a patching behavior.
 module.exports.replaceDish = function (req, res) {
-    var dishesId = req.params.id;
+    var dishesId = parseInt(req.params.id);
 
-	//FIXME: remove sample vars
-	var name = req.body.name || 'no name';
-	var price = req.body.price || 1;
-	var description = req.body.description || 'none given by kitchen';
-	var image = req.body.image || 'https://placehold.it/230x230.png';
-	var categories_id = req.body.categories_id || 1;
-	var dishData = [name, price, description, image, categories_id, dishesId];
+	var dishData = [
+		{ 'field': 'id', 'input': req.body.name, 'rules': { 'notEmpty': false, 'type': 'string' } },
+		{ 'field': 'name', 'input': req.body.name, 'rules': { 'notEmpty': false, 'type': 'string' } },
+		{ 'field': 'price', 'input': req.body.price, 'rules': { 'notEmpty': false, 'type': 'number' } },
+		{ 'field': 'description', 'input': req.body.description, 'rules': { 'notEmpty': false, 'type': 'string' } },
+		{ 'field': 'image', 'input': req.body.image, 'rules': { 'notEmpty': false, 'type': 'string' } },
+		{ 'field': 'categories_id', 'input': req.body.categories_id, 'rules': { 'notEmpty': false, 'type': 'number' } }
+	];
 
-	req.app.get('db').none('UPDATE dishes SET (name, price, description, image, categories_id) = ($1, $2, $3, $4, $5) WHERE id = $6', dishData)
-        .then(function() {
-			return res.status(200).end();
-		})
-		.catch(function(error) {
-			return res.status(500).json(error);
-        });
+	var validationResult = Validator.validate(dishData);
+
+	if(validationResult.status === true) {
+		var dbData = DBHelpers.getInsertQueryData(dishData);
+
+		req.app.get('db').none('UPDATE dishes SET ' + dbData.fieldQuery + ' = ' + dbData.valueQuery + ' WHERE id = ' + dishesId, dbData.vars)
+			.then(function() {
+				return res.status(200).end();
+			})
+			.catch(function(error) {
+				return res.status(500).json(error);
+			});
+	} else {
+		return res.status(validationResult.statusCode).json(validationResult.message);
+	}
 };
