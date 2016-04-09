@@ -4,7 +4,7 @@ module.exports.getRepo = function(db) {
 	return {
 		add: function(queryOptions, dbData) {
 			queryOptions = DBHelpers.prepareQueryOptions(queryOptions);
-			return db.none('INSERT INTO ' + queryOptions.table + ' ' + dbData.fieldQuery + ' VALUES ' + dbData.valueQuery + ' RETURNING id', dbData.vars);
+			return db.one('INSERT INTO ' + queryOptions.table + ' ' + dbData.fieldQuery + ' VALUES ' + dbData.valueQuery + ' RETURNING id', dbData.vars);
 		},
 
 		update: function(queryOptions, dbData, id) {
