@@ -24,6 +24,7 @@
     "compression": "^1.6.1",
     "cors": "^2.7.1",
     "express": "^4.13.4",
-    "pg-promise": "^3.2.6"
+    "pg-promise": "^3.2.6",
+    "winston": "^2.2.0"
   }
 }

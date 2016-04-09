@@ -4,11 +4,22 @@ const Compression = require('compression');
 const CrossOrigin = require('cors');
 const Settings = require('./settings.js');
 const Postgres = require('./common/postgres.js');
+const Winston = require('winston');
 
 var app = Express();
 
-// Setting Global DB Object
+// Winston Configuration
+const Logger = new (Winston.Logger)({
+	transports: [
+		new (Winston.transports.Console)(),
+		new (Winston.transports.File)({ filename: 'waiter.log' })
+	]
+});
+
+
+// Setting Global Objects
 app.set('db', Postgres.getConnection());
+app.set('log', Logger);
 
 app.use(BodyParser.json());
 app.use(Compression());
@@ -20,12 +31,8 @@ app.use('/api/orders', require('./orders/router.js'));
 app.use('/api/users', require('./users/router.js'));
 app.use('/api/categories', require('./categories/router.js'));
 
-// Default Route
-app.use('/', function(req, res){
-	res.send('welcome to the waiter api! check out all the options at the endpoint /resources/. the complete repository can be found on github. https://github.com/waiterio/api/');
-});
 
-// Default Fallback Route
+// Default Route
 app.use(function(req, res) {
 	res.status(404).end();
 });

@@ -9,7 +9,7 @@ module.exports.validate = function(data) {
 			// Checking for empty data
 			if(currentRule.notEmpty === true) {
 				if(typeof value.input === 'undefined' || value.input.length <= 0) {
-					firstError = { 'status': false, 'statusCode': 411, 'message': 'input for ' + value.field + ' may not be empty' };
+					firstError = { 'status': false, 'statusCode': 411, 'message': 'input for ' + value.field + ' should not be empty' };
 					return false;
 				}
 			}

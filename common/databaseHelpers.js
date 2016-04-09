@@ -67,5 +67,41 @@ module.exports.getInsertQueryData = function(data) {
  * @returns {string}
  */
 module.exports.getLimitQuery = function(limitNumber) {
-	return ' LIMIT ' + parseInt(limitNumber);
+	if(typeof limitNumber !== 'undefined') {
+		if(!isNaN(limitNumber)) {
+			var limit = parseInt(limitNumber);
+			if(limit <= 0) {
+				limit = 0;
+			}
+
+			return ' LIMIT ' + limit;
+		}
+	}
+
+	return '';
 };
+
+/**
+ *
+ * @param queryOptions
+ * @returns {*}
+ */
+module.exports.prepareQueryOptions = function(queryOptions) {
+	if(typeof queryOptions.fields === 'undefined') {
+		queryOptions.fields = '*';
+	}
+
+	if(typeof queryOptions.orderBy === 'undefined') {
+		queryOptions.orderBy = '';
+	}
+
+	if(typeof queryOptions.limit === 'undefined') {
+		queryOptions.limit = '';
+	}
+
+	if(typeof queryOptions.table === 'undefined') {
+		throw new Error();
+	}
+
+	return queryOptions;
+}

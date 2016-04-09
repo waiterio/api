@@ -6,12 +6,12 @@ module.exports.addOrder = function(req, res) {
 	var orderData = [
 		{'field': 'notes', 'input': req.body.notes, 'rules': {'notEmpty': false, 'type': 'string'}},
 		{'field': 'tablenumber', 'input': req.body.tablenumber, 'rules': {'notEmpty': true, 'type': 'number'}},
-		{'field': 'orderitems', 'input': orderItems, 'rules': {'notEmpty': false, 'type': 'object'}}
+		{'field': 'orderitems', 'input': orderItems, 'rules': {'notEmpty': true, 'type': 'object'}}
 	];
 
 	var validationResult = Validator.validate(orderData);
 
-	if(validationResult === true) {
+	if(validationResult.status === true) {
 		var orderItemsQuery = [];
 
 		orderItems.forEach(function(value) {

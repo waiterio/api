@@ -15,11 +15,12 @@ module.exports.addDish = function (req, res) {
 	if(validationResult.status === true) {
 		var dbData = DBHelpers.getInsertQueryData(dishData);
 
-		req.app.get('db').one('INSERT INTO dishes ' + dbData.fieldQuery + ' VALUES ' + dbData.valueQuery + ' RETURNING id', dbData.vars)
+		req.app.get('db').action.add({ table: 'dishes' }, dbData)
 			.then(function(returningId) {
 				return res.json(returningId);
 			})
 			.catch(function(error) {
+				req.app.get('log').error('creating dish failed', { pgError: error });
 				return res.status(500).json(error);
 			});
 	} else {

@@ -2,8 +2,9 @@ const DBHelpers = require('../common/databaseHelpers.js');
 
 module.exports.getOrders = function(req, res) {
 	var orderBy = DBHelpers.getOrderByQuery(req.query.sort);
+	var limit = DBHelpers.getLimitQuery(req.query.limit);
 
-	req.app.get('db').any('SELECT * FROM orders' + orderBy)
+	req.app.get('db').action.getAll({table: 'orders', orderBy: orderBy, limit: limit})
 		.then(function(data) {
 			if(data !== null) {
 				return res.json(data);
@@ -12,6 +13,7 @@ module.exports.getOrders = function(req, res) {
 			}
 		})
 		.catch(function(error) {
+			req.app.get('log').error('getting all orders failed', { pgError: error });
 			return res.status(500).json(error);
 		});
 };
@@ -35,6 +37,7 @@ module.exports.getOrder = function(req, res) {
 			}
 		})
 		.catch(function(error) {
+			req.app.get('log').error('getting order with id %s failed', orderId, { pgError: error });
 			return res.status(500).json(error);
 		});
 };

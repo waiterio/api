@@ -1,12 +1,9 @@
 const Validator = require('../common/validator.js');
 const DBHelpers = require('../common/databaseHelpers.js');
 
-// NOTE: this is actually more like a patching behavior.
 module.exports.replaceDish = function (req, res) {
     var dishesId = parseInt(req.params.id);
-
 	var dishData = [
-		{ 'field': 'id', 'input': req.body.name, 'rules': { 'notEmpty': false, 'type': 'string' } },
 		{ 'field': 'name', 'input': req.body.name, 'rules': { 'notEmpty': false, 'type': 'string' } },
 		{ 'field': 'price', 'input': req.body.price, 'rules': { 'notEmpty': false, 'type': 'number' } },
 		{ 'field': 'description', 'input': req.body.description, 'rules': { 'notEmpty': false, 'type': 'string' } },
@@ -19,9 +16,9 @@ module.exports.replaceDish = function (req, res) {
 	if(validationResult.status === true) {
 		var dbData = DBHelpers.getInsertQueryData(dishData);
 
-		req.app.get('db').none('UPDATE dishes SET ' + dbData.fieldQuery + ' = ' + dbData.valueQuery + ' WHERE id = ' + dishesId, dbData.vars)
+		req.app.get('db').action.update({table: 'dishes'}, dbData, dishesId)
 			.then(function() {
-				return res.status(200).end();
+				return res.status(200).json({});
 			})
 			.catch(function(error) {
 				return res.status(500).json(error);
