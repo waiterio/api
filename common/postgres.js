@@ -4,19 +4,22 @@ const Settings = require('../settings.js');
 
 var repository = require('./repository.js');
 
-module.exports.getConnection = function () {
-	var options = {
-		promiseLib: Promises,
-		extend: function(db) {
-			this.action = repository.getRepo(db)
-		}
-	}
-
-	var pgPromise = Postgres(options);
-
-    if(typeof process.env.DATABASE_URL !== 'undefined') {
-        return pgPromise(process.env.DATABASE_URL.toString() + '?ssl=true');
+var options = {
+    promiseLib: Promises,
+    extend: function (db) {
+        this.action = repository.getRepo(db);
     }
+};
 
-	return pgPromise(Settings.database);
+var db, pgp = Postgres(options);
+
+if (typeof process.env.DATABASE_URL !== 'undefined') {
+    db = pgp(process.env.DATABASE_URL.toString() + '?ssl=true');
+} else {
+    db = pgp(Settings.database);
+}
+
+module.exports = {
+    db: db,
+    pgp: pgp
 };
