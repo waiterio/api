@@ -45,3 +45,6 @@ app.use(function(req, res) {
 app.listen(process.env.PORT || Settings.port, function() {
 	console.info('sharks with frickin\' laser beams attached to their heads');
 });
+
+
+module.exports = app;
