@@ -1,6 +1,6 @@
 const Jwt = require('jwt-simple');
-const Crypt = require('bcrypt');
 const Settings = require('../settings.js');
+const Passwords = require('../common/passwords.js');
 
 module.exports.login = function(req, res) {
 	var username = req.body.username;
@@ -13,7 +13,7 @@ module.exports.login = function(req, res) {
 	req.app.get('db').oneOrNone('SELECT * FROM users WHERE username = $1 LIMIT 1', [ username ])
 		.then(function(userObject) {
 
-			if(userObject != null && Crypt.compareSync(password, userObject.password)) {
+			if(userObject != null && Passwords.comparePassword(password, userObject.password)) {
 				return res.json(generateToken(userObject));
 			} else {
 				return res.status(401).json({ status: 401, message: 'Invalid credentials' });

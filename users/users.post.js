@@ -1,14 +1,13 @@
-const Crypt = require('bcrypt');
-const Settings = require('../settings.js');
+const Passwords = require('../common/passwords.js');
 const Validator = require('../common/validator.js');
 const DBHelpers = require('../common/databaseHelpers.js');
 
 module.exports.addUser = function(req, res) {
-	var salt = Crypt.genSaltSync(Settings.saltRounds);
+	var hashedPassword = Passwords.hashPassword(req.body.password);
 
 	var passwordData = [
 		{ 'field': 'username', 'input': req.body.username, 'rules': { 'notEmpty': true, 'type': 'string' } },
-		{ 'field': 'password', 'input': Crypt.hashSync(req.body.password, salt), 'rules': { 'notEmpty': true, 'type': 'string' } },
+		{ 'field': 'password', 'input': hashedPassword, 'rules': { 'notEmpty': true, 'type': 'string' } },
 		{ 'field': 'role', 'input': req.body.role, 'rules': { 'notEmpty': true, 'type': 'string' } },
 		{ 'field': 'email', 'input': req.body.email, 'rules': { 'notEmpty': true, 'type': 'string' } }
 	];
