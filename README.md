@@ -1,6 +1,6 @@
 # api
 
-[![Build Status](https://travis-ci.org/waiterio/api.svg?branch=development)](https://travis-ci.org/waiterio/api)
+[![Build Status](https://travis-ci.org/waiterio/api.svg?branch=master)](https://travis-ci.org/waiterio/api)
 
 testing url currently live at heroku
 https://fathomless-crag-87118.herokuapp.com/api/
