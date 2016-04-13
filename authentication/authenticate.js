@@ -10,7 +10,7 @@ module.exports.login = function(req, res) {
 		return res.status(401).json({ status: 401, message: 'Invalid credentials' });
 	}
 
-	req.app.get('db').oneOrNone('SELECT * FROM users WHEREusername = $1 LIMIT 1', [ username ])
+	req.app.get('db').oneOrNone('SELECT * FROM users WHERE username = $1 LIMIT 1', [ username ])
 		.then(function(userObject) {
 
 			if(userObject != null && Crypt.compareSync(password, userObject.password)) {
@@ -20,7 +20,7 @@ module.exports.login = function(req, res) {
 			}
 		})
 		.catch(function(error) {
-			req.app.get('log').error('selecting user for authentication from database failed', [ error ]);
+			req.app.get('log').error('selecting user for authentication from database failed', { pgError: error });
 			return res.status(500).json({ status: 500, message: 'DB Error', error: error });
 		});
 };

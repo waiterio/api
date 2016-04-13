@@ -21,7 +21,7 @@ module.exports.getUsers = function(req, res) {
 module.exports.getUser = function(req, res) {
 	var userId = parseInt(req.params.id);
 
-	req.app.get('db').get({table: 'users'}, userId)
+	req.app.get('db').action.get({ table: 'users' }, userId)
 		.then(function(data) {
 			if(data !== null) {
 				return res.json(data);

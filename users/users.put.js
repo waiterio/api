@@ -3,8 +3,9 @@ const Settings = require('../settings.js');
 const Validator = require('../common/validator.js');
 const DBHelpers = require('../common/databaseHelpers.js');
 
-module.exports.addUser = function(req, res) {
+module.exports.updateUser = function(req, res) {
 	var salt = Crypt.genSaltSync(Settings.saltRounds);
+	var userId = parseInt(req.params.id);
 
 	var passwordData = [
 		{ 'field': 'username', 'input': req.body.username, 'rules': { 'notEmpty': true, 'type': 'string' } },
@@ -18,12 +19,12 @@ module.exports.addUser = function(req, res) {
 	if(validationResult.status === true) {
 		var dbData = DBHelpers.getInsertQueryData(passwordData);
 
-		req.app.get('db').action.add({ table: 'users' }, dbData)
+		req.app.get('db').action.update({ table: 'users' }, dbData, userId)
 			.then(function(returningId) {
 				return res.json(returningId);
 			})
 			.catch(function(error) {
-				req.app.get('log').error('creating user failed', { pgError: error });
+				req.app.get('log').error('updating user with id ' + userId + ' failed', { pgError: error });
 				return res.status(500).json(error);
 			});
 
