@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/waiterio/api#readme",
   "dependencies": {
-    "bcrypt": "^0.8.5",
+    "bcryptjs": "^2.3.0",
     "bluebird": "^3.3.3",
     "body-parser": "^1.15.0",
     "compression": "^1.6.1",
