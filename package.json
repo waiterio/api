@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "test": "node_modules/.bin/mocha -R spec tests/testServer.js",
     "dev": "nodemon server.js"
   },
   "repository": {
@@ -26,5 +27,9 @@
     "express": "^4.13.4",
     "pg-promise": "^3.2.6",
     "winston": "^2.2.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5",
+    "supertest": "^1.2.0"
   }
 }
