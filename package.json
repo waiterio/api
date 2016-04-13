@@ -1,5 +1,5 @@
 {
-  "name": "waiter",
+  "name": "waiter-api",
   "version": "0.0.1",
   "description": "a restaurant ordering system",
   "main": "server.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/snapsnapturtle/waiter.git"
+    "url": "git+https://github.com/waiterio/api.git"
   },
-  "author": "",
-  "license": "",
+  "author": "Jonah Möller",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/snapsnapturtle/waiter/issues"
+    "url": "https://github.com/waiterio/api/issues"
   },
-  "homepage": "https://github.com/snapsnapturtle/waiter#readme",
+  "homepage": "https://github.com/waiterio/api#readme",
   "dependencies": {
     "bcrypt": "^0.8.5",
     "bluebird": "^3.3.3",
@@ -24,6 +24,7 @@
     "compression": "^1.6.1",
     "cors": "^2.7.1",
     "express": "^4.13.4",
+    "jwt-simple": "^0.5.0",
     "pg-promise": "^3.2.6",
     "winston": "^2.2.0"
   }

@@ -84,7 +84,8 @@ CREATE TABLE users (
   id       INTEGER                NOT NULL,
   username CHARACTER VARYING(255) NOT NULL,
   password CHARACTER VARYING(255) NOT NULL,
-  isAdmin  BOOLEAN NOT NULL
+  role     CHARACTER VARYING(255) NOT NULL,
+  email    CHARACTER VARYING(255) NOT NULL
 );
 
 CREATE SEQUENCE users_id_seq

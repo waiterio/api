@@ -5,6 +5,7 @@ const CrossOrigin = require('cors');
 const Settings = require('./settings.js');
 const Postgres = require('./common/postgres.js');
 const Winston = require('winston');
+const RequestValidation = require('./authentication/validateRequest');
 
 var app = Express();
 
@@ -24,8 +25,12 @@ app.set('log', Logger);
 app.use(BodyParser.json());
 app.use(Compression());
 app.use(CrossOrigin());
+app.use('/api/*', RequestValidation);
+
 
 // API Routes
+app.use('/authenticate', require('./authentication/router.js'));
+
 app.use('/api/dishes', require('./dishes/router.js'));
 app.use('/api/orders', require('./orders/router.js'));
 app.use('/api/users', require('./users/router.js'));
