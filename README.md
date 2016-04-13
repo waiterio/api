@@ -7,7 +7,7 @@ https://fathomless-crag-87118.herokuapp.com/api/
 
 
 ##Getting your Token
-All Endpoints at `/api/*` are protected by checking the token that you send as one of the headers named `access-token`. You can get your token by executing a POST request to the `/authenticate` endpoint. Two fields are mandatory: `username` and `password`. I already created a basic guest account. The procedure should look a little bit like the following:
+All Endpoints at `/api/*` are protected by checking the token that you send as one of the *HEADERS* named `access-token`. You can get your token by executing a POST request to the `/authenticate` endpoint. Two fields are mandatory: `username` and `password`. I already created a basic guest account. The procedure should look a little bit like the following:
 
 ```
 POST http://https://fathomless-crag-87118.herokuapp.com/authenticate
@@ -19,6 +19,7 @@ POST http://https://fathomless-crag-87118.herokuapp.com/authenticate
 ```
 
 Which should result in an answer similar to this one:
+
 ```
 Status: 200 OK
 
