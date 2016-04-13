@@ -18,7 +18,7 @@ const Logger = new (Winston.Logger)({
 
 
 // Setting Global Objects
-app.set('db', Postgres.getConnection());
+app.set('db', Postgres.db);
 app.set('log', Logger);
 
 app.use(BodyParser.json());
