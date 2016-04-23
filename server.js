@@ -22,29 +22,27 @@ const Logger = new (Winston.Logger)({
 app.set('db', Postgres.db);
 app.set('log', Logger);
 
+// Middleware
 app.use(BodyParser.json());
 app.use(Compression());
 app.use(CrossOrigin());
 app.use('/api/*', RequestValidation);
 
+// Authentication Routes
+app.use('/auth', require('./authentication/router.js'));
 
-// API Routes
-app.use('/authenticate', require('./authentication/router.js'));
-
+// Resource related Routes
 app.use('/api/dishes', require('./dishes/router.js'));
 app.use('/api/orders', require('./orders/router.js'));
 app.use('/api/users', require('./users/router.js'));
 app.use('/api/categories', require('./categories/router.js'));
 
-
 // Default Route
 app.use(function(req, res) {
-	res.status(404).end();
+	res.status(404).json({ status: 404, message: 'Not found' });
 });
 
-app.listen(process.env.PORT || Settings.port, function() {
-	console.info('sharks with frickin\' laser beams attached to their heads');
-});
+app.listen(process.env.PORT || Settings.port);
 
 
 module.exports = app;

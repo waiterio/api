@@ -2,7 +2,7 @@ const Jwt = require('jwt-simple');
 const Settings = require('../settings.js');
 const Passwords = require('../common/passwords.js');
 
-module.exports.login = function(req, res) {
+module.exports.getToken = function(req, res) {
 	var username = req.body.username;
 	var password = req.body.password;
 

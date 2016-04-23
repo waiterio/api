@@ -1,14 +1,15 @@
 var request = require('supertest');
 
-describe('the api should', function() {
+describe('main server', function() {
 	var server;
 
 	beforeEach(function() {
 		server = require('../server.js');
 	});
 
-	it('return a 404 when the endpoint does not exist', function testNonExistentEndpoint(done) {
-		request(server).get('/nonexistent')
-			.expect(404, done);
+	it('404 when the endpoint does not exist', function testNonExistentEndpoint(done) {
+		request(server)
+			.get('/nonexistent')
+			.expect(404, { status: 404, message: 'Not found' }, done)
 	});
 });

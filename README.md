@@ -11,6 +11,7 @@ All Endpoints at `/api/*` are protected by checking the token that you send as o
 
 ```
 POST http://https://fathomless-crag-87118.herokuapp.com/authenticate
+Body of the request
 
 {
   "username": "guest",
@@ -18,7 +19,7 @@ POST http://https://fathomless-crag-87118.herokuapp.com/authenticate
 }
 ```
 
-Which should result in an answer similar to this one:
+Which results in an answer similar to this one:
 
 ```
 Status: 200 OK
