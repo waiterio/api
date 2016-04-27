@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/waiterio/api.svg?branch=master)](https://travis-ci.org/waiterio/api)
 [![Code Climate](https://codeclimate.com/github/waiterio/api/badges/gpa.svg)](https://codeclimate.com/github/waiterio/api)
+[![Issue Count](https://codeclimate.com/github/waiterio/api/badges/issue_count.svg)](https://codeclimate.com/github/waiterio/api)
 
 testing url currently live at heroku
 https://fathomless-crag-87118.herokuapp.com/api/
