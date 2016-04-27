@@ -12,7 +12,6 @@ const options = {
 	}
 };
 
-let db = Postgres(options);
 const pgp = Postgres(options);
 
 if (typeof process.env.DATABASE_URL !== 'undefined') {
@@ -22,6 +21,5 @@ if (typeof process.env.DATABASE_URL !== 'undefined') {
 }
 
 module.exports = {
-	db: db,
-	pgp: pgp
+	db, pgp
 };
