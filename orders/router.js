@@ -1,8 +1,10 @@
-const Express = require('express');
-var router = Express.Router();
+'use strict';
 
-var getOrders = require('./orders.get.js');
-var postOrders = require('./orders.post.js');
+const Express = require('express');
+const router = Express.Router();
+
+const getOrders = require('./orders.get.js');
+const postOrders = require('./orders.post.js');
 
 
 // GET Requests

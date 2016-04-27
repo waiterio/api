@@ -1,9 +1,11 @@
-const Express = require('express');
-var router = Express.Router();
+'use strict';
 
-var getUsers = require('./users.get.js');
-var postUsers = require('./users.post.js');
-var putUsers = require('./users.put.js');
+const Express = require('express');
+const router = Express.Router();
+
+const getUsers = require('./users.get.js');
+const postUsers = require('./users.post.js');
+const putUsers = require('./users.put.js');
 
 // GET Requests
 router.get('/', function(req, res) {

@@ -1,19 +1,20 @@
+'use strict';
+
 const Validator = require('../common/validator.js');
 const DBHelpers = require('../common/databaseHelpers.js');
 
 module.exports.addCategory = function(req, res) {
-	var name = req.body.name;
+	let validationResult;
+	const name = req.body.name;
 
-	var categoryData = [
-		{ 'field': 'name', 'input': name, 'rules': { 'notEmpty': true, 'type': 'string' } }
+	const categoryData = [
+		{ field: 'name', input: name, rules: { notEmpty: true, type: 'string' } }
 	];
 
-	var validationResult = Validator.validate(categoryData);
+	validationResult = Validator.validate(categoryData);
 
-	if(validationResult.status === true) {
-		var dbData = DBHelpers.getInsertQueryData(categoryData);
-
-		req.app.get('db').action.add({ table: 'categories' }, dbData)
+	if (validationResult.status === true) {
+		req.app.get('db').action.add({ table: 'categories' }, DBHelpers.getInsertQueryData(categoryData))
 			.then(function(returningId) {
 				return res.status(201).json(returningId);
 			})

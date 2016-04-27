@@ -1,16 +1,18 @@
+'use strict';
+
 const DBHelpers = require('../common/databaseHelpers.js');
 
 module.exports.getCategories = function(req, res) {
-	var orderBy = DBHelpers.getOrderByQuery(req.query.sort);
-	var limit = DBHelpers.getLimitQuery(req.query.limit);
+	const orderBy = DBHelpers.getOrderByQuery(req.query.sort);
+	const limit = DBHelpers.getLimitQuery(req.query.limit);
 
 	req.app.get('db').action.getAll({ table: 'categories', orderBy: orderBy, limit: limit })
 		.then(function(data) {
-			if(data !== null) {
+			if (data !== null) {
 				return res.json(data);
-			} else {
-				return res.status(204).end();
 			}
+
+			return res.status(204).end();
 		})
 		.catch(function(error) {
 			req.app.get('log').error('getting all categories failed', { pgError: error });
@@ -19,18 +21,15 @@ module.exports.getCategories = function(req, res) {
 };
 
 module.exports.getCategory = function(req, res) {
-	var categoryId = parseInt(req.params.id, 10);
+	const categoryId = parseInt(req.params.id, 10);
 
-	var orderBy = DBHelpers.getOrderByQuery(req.query.sort);
-	var limit = DBHelpers.getLimitQuery(req.query.limit);
-
-	req.app.get('db').action.get({ table: 'categories', orderBy: orderBy, limit: limit }, categoryId)
+	req.app.get('db').action.get({ table: 'categories' }, categoryId)
 		.then(function(data) {
-			if(data !== null) {
+			if (data !== null) {
 				return res.json(data);
-			} else {
-				return res.status(204).end();
 			}
+
+			return res.status(204).end();
 		})
 		.catch(function(error) {
 			req.app.get('log').error('getting category with id %s failed', categoryId, { pgError: error });

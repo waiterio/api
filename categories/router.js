@@ -1,34 +1,35 @@
-const Express = require('express');
-var router = Express.Router();
+'use strict';
 
-var getCategories = require('./categories.get.js');
-var postCategories = require('./categories.post.js');
-var deleteCategories = require('./categories.delete.js');
-var putCategories = require('./categories.put.js');
+const Express = require('express');
+const Router = Express.Router();
+const getCategories = require('./categories.get.js');
+const postCategories = require('./categories.post.js');
+const deleteCategories = require('./categories.delete.js');
+const putCategories = require('./categories.put.js');
 
 // GET Requests
-router.get('/', function(req, res) {
+Router.get('/', function(req, res) {
 	getCategories.getCategories(req, res);
 });
 
-router.get('/:id', function(req, res) {
+Router.get('/:id', function(req, res) {
 	getCategories.getCategory(req, res);
 });
 
 // POST Requests
-router.post('/', function(req, res) {
+Router.post('/', function(req, res) {
 	postCategories.addCategory(req, res);
 });
 
 // DELETE Requests
-router.delete('/:id', function(req, res) {
+Router.delete('/:id', function(req, res) {
 	deleteCategories.removeCategory(req, res);
 });
 
-//PUT Requests
-router.put('/:id', function(req, res) {
+// PUT Requests
+Router.put('/:id', function(req, res) {
 	putCategories.updateCategory(req, res);
 });
 
 
-module.exports = router;
+module.exports = Router;

@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * This helper function constructs the ORDER BY statement
  * Fields that are to be sorted by can be passed comma separated.
@@ -8,28 +10,28 @@
  * @returns {string}
  */
 module.exports.getOrderByQuery = function(sortQuery) {
-	if(typeof sortQuery !== 'undefined') {
-		var orderByList = [];
-		var sortables = sortQuery.toString().split(',');
+	if (typeof sortQuery !== 'undefined') {
+		const orderByList = [];
+		const sortables = sortQuery.toString().split(',');
 
 		sortables.forEach(function(value) {
-			var sortOrder = '';
-			var sortField = '';
+			let sortOrder = '';
+			let sortField = '';
 
-			var matches = value.match(/^([\-])(.*)/);
-			if(matches !== null) {
+			const matches = value.match(/^([\-])(.*)/);
+			if (matches !== null) {
 				sortOrder = 'DESC';
-				sortField = matches[ 2 ].trim();
+				sortField = matches[2].trim();
 			} else {
 				sortOrder = 'ASC';
 				sortField = value.trim();
 			}
 
-			orderByList.push(sortField + ' ' + sortOrder);
+			orderByList.push(`${sortField} ${sortOrder}`);
 		});
 
-		if(orderByList.length > 0) {
-			return ' ORDER BY ' + orderByList.join(', ');
+		if (orderByList.length > 0) {
+			return ` ORDER BY ${orderByList.join(', ')}`;
 		}
 	}
 
@@ -42,23 +44,25 @@ module.exports.getOrderByQuery = function(sortQuery) {
  * @returns {object}
  */
 module.exports.getInsertQueryData = function(data) {
-	var queryFields = [];
-	var queryValues = [];
-	var replacementVars = [];
+	const queryFields = [];
+	const queryValues = [];
+	const replacementVars = [];
 
-	if(typeof data !== 'undefined') {
-		var valueCounter = 1;
+	if (typeof data !== 'undefined') {
+		let valueCounter = 1;
+
 		data.forEach(function(value) {
-			if(typeof value.input !== 'undefined') {
+			if (typeof value.input !== 'undefined') {
 				queryFields.push(value.field);
-				queryValues.push('$' + valueCounter);
-				valueCounter++;
+				queryValues.push(`$${valueCounter}`);
 				replacementVars.push(value.input);
+
+				valueCounter++;
 			}
 		});
 	}
 
-	return { 'fieldQuery': '(' + queryFields.join() + ')', 'valueQuery': '(' + queryValues.join() + ')', 'vars': replacementVars };
+	return { fieldQuery: `(${queryFields.join()})`, valueQuery: `(${queryValues.join()})`, vars: replacementVars };
 };
 
 /**
@@ -67,14 +71,15 @@ module.exports.getInsertQueryData = function(data) {
  * @returns {string}
  */
 module.exports.getLimitQuery = function(limitNumber) {
-	if(typeof limitNumber !== 'undefined') {
-		if(!isNaN(limitNumber)) {
-			var limit = parseInt(limitNumber, 10);
-			if(limit <= 0) {
+	if (typeof limitNumber !== 'undefined') {
+		if (!isNaN(limitNumber)) {
+			let limit = parseInt(limitNumber, 10);
+
+			if (limit <= 0) {
 				limit = 0;
 			}
 
-			return ' LIMIT ' + limit;
+			return ` LIMIT ${limit}`;
 		}
 	}
 
@@ -87,21 +92,23 @@ module.exports.getLimitQuery = function(limitNumber) {
  * @returns {*}
  */
 module.exports.prepareQueryOptions = function(queryOptions) {
-	if(typeof queryOptions.fields === 'undefined') {
-		queryOptions.fields = '*';
+	const preparedQueryOptions = queryOptions;
+
+	if (typeof queryOptions.fields === 'undefined') {
+		preparedQueryOptions.fields = '*';
 	}
 
-	if(typeof queryOptions.orderBy === 'undefined') {
-		queryOptions.orderBy = '';
+	if (typeof queryOptions.orderBy === 'undefined') {
+		preparedQueryOptions.orderBy = '';
 	}
 
-	if(typeof queryOptions.limit === 'undefined') {
-		queryOptions.limit = '';
+	if (typeof queryOptions.limit === 'undefined') {
+		preparedQueryOptions.limit = '';
 	}
 
-	if(typeof queryOptions.table === 'undefined') {
-		throw new Error();
+	if (typeof queryOptions.table === 'undefined') {
+		throw new Error('table cannot be undefined');
 	}
 
-	return queryOptions;
+	return preparedQueryOptions;
 };

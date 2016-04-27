@@ -1,25 +1,26 @@
+'use strict';
+
 const Validator = require('../common/validator.js');
 const DBHelpers = require('../common/databaseHelpers.js');
 
 module.exports.updateCategory = function(req, res) {
-	var name = req.body.name;
-	var categoryId = parseInt(req.params.id, 10);
+	let validationResult;
 
-	var categoryData = [
-		{ 'field': 'name', 'input': name, 'rules': { 'notEmpty': true, 'type': 'string' } }
+	const name = req.body.name;
+	const categoryId = parseInt(req.params.id, 10);
+	const categoryData = [
+		{ field: 'name', input: name, rules: { notEmpty: true, type: 'string' } }
 	];
 
-	var validationResult = Validator.validate(categoryData);
+	validationResult = Validator.validate(categoryData);
 
-	if(validationResult.status === true) {
-		var dbData = DBHelpers.getInsertQueryData(categoryData);
-
-		req.app.get('db').action.update({ table: 'categories' }, dbData, categoryId)
+	if (validationResult.status === true) {
+		req.app.get('db').action.update({ table: 'categories' }, DBHelpers.getInsertQueryData(categoryData), categoryId)
 			.then(function() {
 				return res.status(200).json({});
 			})
 			.catch(function(error) {
-				req.app.get('log').error('updating category with id ' + categoryId + ' failed', { pgError: error });
+				req.app.get('log').error(`updating category with id ${categoryId} failed`, { pgError: error });
 				return res.status(500).json(error);
 			});
 	} else {

@@ -1,25 +1,27 @@
+'use strict';
+
 const Promises = require('bluebird');
 const Postgres = require('pg-promise');
 const Settings = require('../settings.js');
+const Repository = require('./repository.js');
 
-var repository = require('./repository.js');
-
-var options = {
-    promiseLib: Promises,
-    extend: function (db) {
-        this.action = repository.getRepo(db);
-    }
+const options = {
+	promiseLib: Promises,
+	extend: function(db) {
+		this.action = Repository.getRepo(db);
+	}
 };
 
-var db, pgp = Postgres(options);
+let db = Postgres(options);
+const pgp = Postgres(options);
 
 if (typeof process.env.DATABASE_URL !== 'undefined') {
-    db = pgp(process.env.DATABASE_URL.toString() + '?ssl=true');
+	db = pgp(`${process.env.DATABASE_URL.toString()} ?ssl=true`);
 } else {
-    db = pgp(Settings.database);
+	db = pgp(Settings.database);
 }
 
 module.exports = {
-    db: db,
-    pgp: pgp
+	db: db,
+	pgp: pgp
 };

@@ -1,6 +1,7 @@
+'use strict';
 
 module.exports.removeCategory = function(req, res) {
-	var categoryId = parseInt(req.params.id, 10);
+	const categoryId = parseInt(req.params.id, 10);
 
 	req.app.get('db').action.delete({ table: 'categories' }, categoryId)
 		.then(function() {
