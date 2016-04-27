@@ -2,7 +2,7 @@ const Validator = require('../common/validator.js');
 const DBHelpers = require('../common/databaseHelpers.js');
 
 module.exports.replaceDish = function (req, res) {
-    var dishesId = parseInt(req.params.id);
+    var dishesId = parseInt(req.params.id, 10);
 	var dishData = [
 		{ 'field': 'name', 'input': req.body.name, 'rules': { 'notEmpty': false, 'type': 'string' } },
 		{ 'field': 'price', 'input': req.body.price, 'rules': { 'notEmpty': false, 'type': 'number' } },

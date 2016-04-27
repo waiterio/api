@@ -1,5 +1,5 @@
 module.exports.deleteDish = function(req, res) {
-	var dishId = parseInt(req.params.id);
+	var dishId = parseInt(req.params.id, 10);
 
 	req.app.get('db').action.delete({ table: 'dishes' }, dishId)
 		.then(function() {

@@ -19,7 +19,7 @@ module.exports.getUsers = function(req, res) {
 };
 
 module.exports.getUser = function(req, res) {
-	var userId = parseInt(req.params.id);
+	var userId = parseInt(req.params.id, 10);
 
 	req.app.get('db').action.get({ table: 'users' }, userId)
 		.then(function(data) {

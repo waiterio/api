@@ -3,7 +3,7 @@ const DBHelpers = require('../common/databaseHelpers.js');
 
 module.exports.updateCategory = function(req, res) {
 	var name = req.body.name;
-	var categoryId = parseInt(req.params.id);
+	var categoryId = parseInt(req.params.id, 10);
 
 	var categoryData = [
 		{ 'field': 'name', 'input': name, 'rules': { 'notEmpty': true, 'type': 'string' } }

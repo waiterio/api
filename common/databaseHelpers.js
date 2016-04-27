@@ -69,7 +69,7 @@ module.exports.getInsertQueryData = function(data) {
 module.exports.getLimitQuery = function(limitNumber) {
 	if(typeof limitNumber !== 'undefined') {
 		if(!isNaN(limitNumber)) {
-			var limit = parseInt(limitNumber);
+			var limit = parseInt(limitNumber, 10);
 			if(limit <= 0) {
 				limit = 0;
 			}
@@ -104,4 +104,4 @@ module.exports.prepareQueryOptions = function(queryOptions) {
 	}
 
 	return queryOptions;
-}
+};

@@ -19,7 +19,7 @@ module.exports.getDishes = function(req, res) {
 };
 
 module.exports.getDish = function(req, res) {
-	var dishId = parseInt(req.params.id);
+	var dishId = parseInt(req.params.id, 10);
 
 	req.app.get('db').action.get({ table: 'dishes', orderBy: orderBy, limit: limit }, dishId)
 		.then(function(data) {

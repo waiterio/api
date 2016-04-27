@@ -3,7 +3,7 @@ const Validator = require('../common/validator.js');
 const DBHelpers = require('../common/databaseHelpers.js');
 
 module.exports.updateUser = function(req, res) {
-	var userId = parseInt(req.params.id);
+	var userId = parseInt(req.params.id, 10);
 
 
 	var hashedPassword = Passwords.hashPassword(req.body.password);

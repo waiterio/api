@@ -19,7 +19,7 @@ module.exports.getCategories = function(req, res) {
 };
 
 module.exports.getCategory = function(req, res) {
-	var categoryId = parseInt(req.params.id);
+	var categoryId = parseInt(req.params.id, 10);
 
 	var orderBy = DBHelpers.getOrderByQuery(req.query.sort);
 	var limit = DBHelpers.getLimitQuery(req.query.limit);

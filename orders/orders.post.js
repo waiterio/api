@@ -15,7 +15,7 @@ module.exports.addOrder = function(req, res) {
 		var orderItemsQuery = [];
 
 		orderItems.forEach(function(value) {
-			orderItemsQuery.push('((SELECT (id) FROM ordertable), ' + parseInt(value.dishes_id) + ')')
+			orderItemsQuery.push('((SELECT (id) FROM ordertable), ' + parseInt(value.dishes_id, 10) + ')')
 		});
 
 		req.app.get('db').query('WITH ordertable AS (INSERT INTO orders(tablenumber, ordertimestamp, notes) ' +

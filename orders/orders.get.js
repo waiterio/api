@@ -19,7 +19,7 @@ module.exports.getOrders = function(req, res) {
 };
 
 module.exports.getOrder = function(req, res) {
-	var orderId = parseInt(req.params.id);
+	var orderId = parseInt(req.params.id, 10);
 
 	req.app.get('db').task(function(db) {
 		return db.batch([

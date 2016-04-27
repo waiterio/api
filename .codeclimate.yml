@@ -1,0 +1,21 @@
+---
+engines:
+  csslint:
+    enabled: true
+  eslint:
+    enabled: true
+  fixme:
+    enabled: true
+  duplication:
+    enabled: false
+
+ratings:
+  paths:
+  - "**.css"
+  - "**.js"
+  - "**.jsx"
+  - "**.py"
+
+exclude_paths:
+- node_modules/**/*
+- tests/**/*

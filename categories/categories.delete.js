@@ -1,6 +1,6 @@
 
 module.exports.removeCategory = function(req, res) {
-	var categoryId = parseInt(req.params.id);
+	var categoryId = parseInt(req.params.id, 10);
 
 	req.app.get('db').action.delete({ table: 'categories' }, categoryId)
 		.then(function() {
