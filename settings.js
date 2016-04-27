@@ -1,6 +1,6 @@
 
 module.exports = {
-    port     : 8080,
+    port     : 8081,
     saltRounds: 10,
     secret: 'SuperSecretWaiterIOStuff',
     expireDays: 7,
