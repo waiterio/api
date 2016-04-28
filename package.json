@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "node_modules/.bin/mocha -R spec --recursive tests/",
+    "coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- --recursive",
     "dev": "nodemon server.js"
   },
   "repository": {
@@ -35,6 +36,7 @@
     "eslint-plugin-import": "^1.6.0",
     "eslint-plugin-jsx-a11y": "^1.0.3",
     "eslint-plugin-react": "^5.0.1",
+    "istanbul": "^0.4.3",
     "mocha": "^2.4.5",
     "sinon": "^1.17.3",
     "sinon-stub-promise": "^2.0.0",
