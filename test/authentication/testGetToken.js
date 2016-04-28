@@ -2,19 +2,14 @@
 
 const Request = require('supertest');
 const Sinon = require('sinon');
-
-var sinonStubPromise = require('sinon-stub-promise');
-sinonStubPromise(Sinon);
-
-const Promises = require('bluebird');
 const Postgres = require('pg-promise');
+const Promises = require('bluebird');
+const SinonStubPromise = require('sinon-stub-promise');
 const Settings = require('../../settings.js');
 const Repository = require('../../common/repository.js');
 const Passwords = require('../../common/passwords.js');
 
-
-var pgp = require('pg-promise');
-
+SinonStubPromise(Sinon);
 
 describe('getting a user token', function() {
 	const pgp = Postgres({ promiseLib: Promises, noLocking: true, extend: function(db) { this.action = Repository.getRepo(db); } });
@@ -43,5 +38,32 @@ describe('getting a user token', function() {
 			.post('/auth/token')
 			.send({ username: 'marcus', password: 'superSecretPassword123' })
 			.expect(200, done);
+	});
+
+	it('an invalid password should fail', function testNonExistentEndpoint(done) {
+		Request(server)
+			.post('/auth/token')
+			.send({ username: 'marcus', password: 'failure' })
+			.expect(401, { status: 401, message: 'Invalid credentials' }, done);
+	});
+
+	it('a missing password should fail', function testNonExistentEndpoint(done) {
+		Request(server)
+			.post('/auth/token')
+			.send({ username: 'marcus' })
+			.expect(401, { status: 401, message: 'Invalid credentials' }, done);
+	});
+
+	it('a missing username should fail', function testNonExistentEndpoint(done) {
+		Request(server)
+			.post('/auth/token')
+			.send({ password: 'mySecret' })
+			.expect(401, { status: 401, message: 'Invalid credentials' }, done);
+	});
+
+	it('no information should fail', function testNonExistentEndpoint(done) {
+		Request(server)
+			.post('/auth/token')
+			.expect(401, { status: 401, message: 'Invalid credentials' }, done);
 	});
 });
