@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node_modules/.bin/mocha -R spec --recursive tests/",
+    "test": "node_modules/.bin/mocha -R spec --recursive test/",
     "coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- --recursive",
     "dev": "nodemon server.js"
   },
