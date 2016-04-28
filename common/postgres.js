@@ -12,7 +12,7 @@ const options = {
 	}
 };
 
-let db = Postgres(options);
+let db;
 const pgp = Postgres(options);
 
 if (typeof process.env.DATABASE_URL !== 'undefined') {

@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node_modules/.bin/mocha -R spec tests/testServer.js",
+    "test": "node_modules/.bin/mocha -R spec --recursive tests/",
     "dev": "nodemon server.js"
   },
   "repository": {
@@ -37,6 +37,7 @@
     "eslint-plugin-react": "^5.0.1",
     "mocha": "^2.4.5",
     "sinon": "^1.17.3",
+    "sinon-stub-promise": "^2.0.0",
     "supertest": "^1.2.0"
   }
 }
