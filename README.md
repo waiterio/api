@@ -33,7 +33,7 @@ your liking. You can find the settings in the `settings.js` file in the projects
 	"secret": "SuperSecretWaiterIOStuff",
 	"expireDays": 7,
 	"database": {
-		"host": "localhost',
+		"host": "localhost",
 		"port": 5432,
 		"database": "waiter",
 		"user": "waiter",
