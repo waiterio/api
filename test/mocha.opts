@@ -1,4 +1,4 @@
---reporter list
+--reporter landing
 --ui bdd
 --growl
 --recursive

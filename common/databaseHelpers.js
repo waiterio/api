@@ -4,7 +4,10 @@
  * This helper function constructs the ORDER BY statement
  * Fields that are to be sorted by can be passed comma separated.
  * A - before the column that is to be sorted, indicates a descending
- * sort order, if there is no dash, ascending order will be used
+ * sort order, if there is no dash, ascending order will be used.
+ *
+ * sortQuery example: -username,id,-email
+ *           result: username DESC, id ASC, email DESC
  *
  * @param sortQuery
  * @returns {string}
@@ -39,6 +42,15 @@ module.exports.getOrderByQuery = function(sortQuery) {
 };
 
 /**
+ * This function returns an object containing information that
+ * may be used to build an insert query.
+ *
+ * Sample data:
+ * const passwordData = [
+	 { field: 'username', input: req.body.username, rules: { notEmpty: true, type: 'string' } },
+	 { field: 'password', input: hashedPassword, rules: { notEmpty: true, type: 'string' } },
+	 { field: 'role', input: req.body.role, rules: { notEmpty: true, type: 'string' } },
+	 { field: 'email', input: req.body.email, rules: { notEmpty: true, type: 'string' } } ];
  *
  * @param data
  * @returns {object}
@@ -94,20 +106,22 @@ module.exports.getLimitQuery = function(limitNumber) {
 module.exports.prepareQueryOptions = function(queryOptions) {
 	const preparedQueryOptions = queryOptions;
 
-	if (typeof queryOptions.fields === 'undefined') {
-		preparedQueryOptions.fields = '*';
-	}
+	if (typeof preparedQueryOptions !== 'undefined' && preparedQueryOptions !== null) {
+		if (typeof queryOptions.fields === 'undefined') {
+			preparedQueryOptions.fields = '*';
+		}
 
-	if (typeof queryOptions.orderBy === 'undefined') {
-		preparedQueryOptions.orderBy = '';
-	}
+		if (typeof queryOptions.orderBy === 'undefined') {
+			preparedQueryOptions.orderBy = '';
+		}
 
-	if (typeof queryOptions.limit === 'undefined') {
-		preparedQueryOptions.limit = '';
-	}
+		if (typeof queryOptions.limit === 'undefined') {
+			preparedQueryOptions.limit = '';
+		}
 
-	if (typeof queryOptions.table === 'undefined') {
-		throw new Error('table cannot be undefined');
+		if (typeof queryOptions.table === 'undefined') {
+			throw new Error('table cannot be undefined');
+		}
 	}
 
 	return preparedQueryOptions;

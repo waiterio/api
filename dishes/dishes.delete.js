@@ -3,7 +3,7 @@
 module.exports.deleteDish = function(req, res) {
 	const dishId = parseInt(req.params.id, 10);
 
-	req.app.get('db').action.delete({ table: 'dishes' }, dishId)
+	req.app.get('db').action.remove({ table: 'dishes' }, dishId)
 		.then(function() {
 			return res.status(200).json({});
 		})

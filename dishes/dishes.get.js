@@ -23,7 +23,7 @@ module.exports.getDishes = function(req, res) {
 module.exports.getDish = function(req, res) {
 	const dishId = parseInt(req.params.id, 10);
 
-	req.app.get('db').action.get({ table: 'dishes' }, dishId)
+	req.app.get('db').action.getSingle({ table: 'dishes' }, dishId)
 		.then(function(data) {
 			if (data !== null) {
 				return res.json(data);

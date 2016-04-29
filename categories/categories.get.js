@@ -23,7 +23,7 @@ module.exports.getCategories = function(req, res) {
 module.exports.getCategory = function(req, res) {
 	const categoryId = parseInt(req.params.id, 10);
 
-	req.app.get('db').action.get({ table: 'categories' }, categoryId)
+	req.app.get('db').action.getSingle({ table: 'categories' }, categoryId)
 		.then(function(data) {
 			if (data !== null) {
 				return res.json(data);
