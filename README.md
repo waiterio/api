@@ -7,7 +7,7 @@
 testing url currently live at heroku
 https://fathomless-crag-87118.herokuapp.com/api/
 
-##Getting Started
+## Installation
 What you will need:
 * Postgres Server
 * Node 4 and above
@@ -31,17 +31,17 @@ your liking. You can find the settings in the `settings.js` file in the projects
 
 ```json
 {
-	port: 8081, // Port on which the application runs
-	saltRounds: 10, // Salt rounds for password hashing
-	secret: 'SuperSecretWaiterIOStuff', // Password hashing salt
-	expireDays: 7, // How long until a token expires
-	database: {
-		host: 'localhost', // Database host
-		port: 5432, // Database port
-		database: 'waiter', // Database name
-		user: 'waiter', // Database user
-		password: 'waiter', // Database password
-		ssl: false // Database with SSL or without
+	"port": 8081,
+	"saltRounds": 10,
+	"secret": 'SuperSecretWaiterIOStuff',
+	"expireDays": 7,
+	"database": {
+		"host": 'localhost',
+		"port": 5432,
+		"database": 'waiter',
+		"user": 'waiter',
+		"password": 'waiter',
+		"ssl": false
 	}
 }
 ```
