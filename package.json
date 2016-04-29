@@ -31,6 +31,7 @@
     "winston": "^2.2.0"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "eslint": "^2.8.0",
     "eslint-config-airbnb": "^8.0.0",
     "eslint-plugin-import": "^1.6.0",
