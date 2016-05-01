@@ -8,7 +8,6 @@ const FileSystem = require('fs');
 const Log = require('./logging.js');
 const Repo = require('./databaseRepository.js');
 const Settings = require('../settings.js');
-const MemoryDB = require('./memoryDatabase.js');
 
 if (Settings.environment === 'production') {
 	SQLite = require('sqlite3').cached;
@@ -27,7 +26,11 @@ if (typeof Settings.database !== 'undefined') {
 
 if (Settings.database == ':memory:') {
 	Log.warn('database will reside in memory only and will be deleted once the app stops');
-	MemoryDB.loadDataInMemory(FileSystem.readFileSync('./memorydb.sql', 'utf-8'), DB);
+	DB.exec(FileSystem.readFileSync('./memorydb.sql', 'utf-8'), function(error) {
+		if(error !== null) {
+			throw new Error('database could not be loaded into memory');
+		}
+	});
 }
 
 
@@ -35,3 +38,4 @@ module.exports = {
 	action: Repo.getRepo(DB),
 	db: DB
 };
+
