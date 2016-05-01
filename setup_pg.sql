@@ -59,7 +59,7 @@ NO MINVALUE
 NO MAXVALUE
 CACHE 1;
 
-ALTER SEQUENCE orderitems_id_seq OWNED BY orderitems.id;
+ALTER SEQUENCE orderitems_id_seq OWNED BY orderitems.id3;
 
 
 CREATE TABLE orders (
@@ -99,7 +99,7 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 ALTER TABLE ONLY categories ALTER COLUMN id SET DEFAULT nextval('categories_id_seq' :: REGCLASS);
 ALTER TABLE ONLY dishes ALTER COLUMN id SET DEFAULT nextval('dishes_id_seq' :: REGCLASS);
-ALTER TABLE ONLY orderitems ALTER COLUMN id SET DEFAULT nextval('orderitems_id_seq' :: REGCLASS);
+ALTER TABLE ONLY orderitems ALTER COLUMN id3 SET DEFAULT nextval('orderitems_id_seq' :: REGCLASS);
 ALTER TABLE ONLY orders ALTER COLUMN id SET DEFAULT nextval('orders_id_seq' :: REGCLASS);
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq' :: REGCLASS);
 
@@ -110,7 +110,7 @@ ALTER TABLE ONLY dishes
 ADD CONSTRAINT dishes_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY orderitems
-ADD CONSTRAINT orderitems_pkey PRIMARY KEY (id);
+ADD CONSTRAINT orderitems_pkey PRIMARY KEY (id3);
 
 ALTER TABLE ONLY orders
 ADD CONSTRAINT orders_pkey PRIMARY KEY (id);

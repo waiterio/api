@@ -3,7 +3,6 @@
 const Validator = require('../../common/validator.js');
 const Assert = require('chai').assert;
 
-
 describe('validator should', function() {
 	it('fail with empty data', function () {
 		const validationResult = Validator.validate({});

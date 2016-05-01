@@ -6,6 +6,7 @@ const router = Express.Router();
 const getUsers = require('./users.get.js');
 const postUsers = require('./users.post.js');
 const putUsers = require('./users.put.js');
+const deleteUsers = require('./users.delete.js');
 
 // GET Requests
 router.get('/', function(req, res) {
@@ -26,5 +27,9 @@ router.put('/:id', function(req, res) {
 	putUsers.updateUser(req, res);
 });
 
+// DELETE Requests
+router.delete('/:id', function(req, res) {
+	deleteUsers.removeUser(req, res);
+});
 
 module.exports = router;

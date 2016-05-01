@@ -66,7 +66,7 @@ module.exports.getInsertQueryData = function(data) {
 		data.forEach(function(value) {
 			if (typeof value.input !== 'undefined') {
 				queryFields.push(value.field);
-				queryValues.push(`$${valueCounter}`);
+				queryValues.push('?');
 				replacementVars.push(value.input);
 
 				valueCounter++;
@@ -74,7 +74,23 @@ module.exports.getInsertQueryData = function(data) {
 		});
 	}
 
-	return { fieldQuery: `(${queryFields.join()})`, valueQuery: `(${queryValues.join()})`, vars: replacementVars };
+	return { fields: queryFields, values: queryValues, fieldQuery: `(${queryFields.join()})`, valueQuery: `(${queryValues.join()})`, vars: replacementVars };
+};
+
+module.exports.getUpdateData = function(data) {
+	const queryParts = [];
+	const replacementVars = [];
+
+	if (typeof data !== 'undefined') {
+		data.forEach(function(value) {
+			if (typeof value.input !== 'undefined') {
+				queryParts.push(value.field + '=?');
+				replacementVars.push(value.input);
+			}
+		});
+	}
+
+	return { updateQuery: `${queryParts.join()}`, vars: replacementVars };
 };
 
 /**

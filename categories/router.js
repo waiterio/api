@@ -2,6 +2,7 @@
 
 const Express = require('express');
 const Router = Express.Router();
+
 const getCategories = require('./categories.get.js');
 const postCategories = require('./categories.post.js');
 const deleteCategories = require('./categories.delete.js');

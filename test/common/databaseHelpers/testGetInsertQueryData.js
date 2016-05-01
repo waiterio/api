@@ -15,7 +15,7 @@ module.exports = function() {
 			{ field: 'email', input: 'ralph@lauren.com', rules: { notEmpty: true, type: 'string' } } ]);
 
 		Assert.equal(queryData.fieldQuery, '(email)');
-		Assert.equal(queryData.valueQuery, '($1)');
+		Assert.equal(queryData.valueQuery, '(?)');
 		Assert.deepEqual(queryData.vars, [ 'ralph@lauren.com' ]);
 	});
 
@@ -27,7 +27,7 @@ module.exports = function() {
 		]);
 
 		Assert.equal(queryData.fieldQuery, '(full_name,counter,username)');
-		Assert.equal(queryData.valueQuery, '($1,$2,$3)');
+		Assert.equal(queryData.valueQuery, '(?,?,?)');
 		Assert.deepEqual(queryData.vars, [ 'Peter Pan', 9, 'pan99' ]);
 	});
 };

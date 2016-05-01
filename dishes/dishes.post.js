@@ -4,7 +4,6 @@ const Validator = require('../common/validator.js');
 const DBHelpers = require('../common/databaseHelpers.js');
 
 module.exports.addDish = function(req, res) {
-	let validationResult;
 	const dishData = [
 		{ field: 'name', input: req.body.name, rules: { notEmpty: true, type: 'string' } },
 		{ field: 'price', input: req.body.price, rules: { notEmpty: true, type: 'number' } },
@@ -12,18 +11,16 @@ module.exports.addDish = function(req, res) {
 		{ field: 'image', input: req.body.image, rules: { notEmpty: false, type: 'string' } },
 		{ field: 'categories_id', input: req.body.categories_id, rules: { notEmpty: false, type: 'number' } }
 	];
-
-	validationResult = Validator.validate(dishData);
+	const validationResult = Validator.validate(dishData);
 
 	if (validationResult.status === true) {
-		req.app.get('db').action.add({ table: 'dishes' }, DBHelpers.getInsertQueryData(dishData))
-			.then(function(returningId) {
-				return res.json(returningId);
-			})
-			.catch(function(error) {
-				req.app.get('log').error('creating dish failed', { pgError: error });
+		req.app.get('db').action.addRecord({ table: 'dishes' }, DBHelpers.getInsertQueryData(dishData), function(error) {
+			if (error !== null) {
 				return res.status(500).json(error);
-			});
+			}
+
+			return res.json({ id: this.lastID });
+		});
 	} else {
 		return res.status(validationResult.statusCode).json(validationResult.message);
 	}

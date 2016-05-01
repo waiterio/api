@@ -18,16 +18,15 @@ module.exports.updateUser = function(req, res) {
 	const validationResult = Validator.validate(passwordData);
 
 	if (validationResult.status === true) {
-		const dbData = DBHelpers.getInsertQueryData(passwordData);
+		const dbData = DBHelpers.getUpdateData(passwordData);
 
-		req.app.get('db').action.update({ table: 'users' }, dbData, userId)
-			.then(function(returningId) {
-				return res.json(returningId);
-			})
-			.catch(function(error) {
-				req.app.get('log').error(`updating user with id ${userId} failed`, { pgError: error });
-				return res.status(500).json(error);
-			});
+		req.app.get('db').action.updateRecord({ table: 'users' }, dbData, userId, function(error) {
+			if (error !== null) {
+				return res.status(500).json({ status: 500, message: error })
+			}
+
+			return res.json({ status: 200, message: 'success' });
+		});
 	} else {
 		return res.status(validationResult.statusCode).json(validationResult.message);
 	}
