@@ -16,14 +16,10 @@ module.exports.addUser = function(req, res) {
 
 	if (validationResult.status === true) {
 		const dbData = DBHelpers.getInsertQueryData(passwordData);
-		req.app.get('db').action.addRecord({ table: 'users' }, dbData, function(error) {
-			if (error !== null) {
-				return res.status(500).json(error);
-			}
-
-			return res.json(this.lastID);
+		req.app.get('db').action.addRecord({ table: 'users' }, dbData, function() {
+			return res.json({ id: this.lastID });
 		});
 	} else {
-		return res.status(validationResult.statusCode).json(validationResult.message);
+		return res.status(validationResult.statusCode).json({ status: validationResult.statusCode, message: validationResult.message });
 	}
 };

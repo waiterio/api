@@ -14,16 +14,19 @@ module.exports = function() {
 		const postData = { name: 'categorySecret' };
 
 		server.get('db').db.serialize(function() {
-			server.get('db').db.run('INSERT INTO categories (name) VALUES(\'test category\')', function() {
-				let categoryId = this.lastID;
+			server.get('db').db.run('INSERT INTO categories (name) VALUES(?)', [ 'burger king' ], function(error) {
+				const categoryId = this.lastID;
+
 				Request(server)
 					.put('/api/categories/' + categoryId)
 					.send(postData)
 					.expect('Access-Control-Allow-Origin', '*')
 					.expect('Content-Type', /json/)
 					.expect(200)
+					.expect({ status: 200, message: 'success' })
 					.end(function() {
-						server.get('db').db.run('DELETE FROM categories WHERE id = ?', categoryId, function() {
+						server.get('db').db.run('DELETE FROM categories WHERE id = ?', [ categoryId ], function() {
+							if (error) return done(error);
 							done();
 						});
 					});
@@ -42,7 +45,7 @@ module.exports = function() {
 
 	it('fail when data is invalid', function(done) {
 		Request(server)
-			.put('/api/dishes/1')
+			.put('/api/categories/1')
 			.send({ name: [ 1, 2, 3 ] })
 			.expect('Access-Control-Allow-Origin', '*')
 			.expect('Content-Type', /json/)

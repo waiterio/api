@@ -11,17 +11,21 @@ module.exports = function() {
 	});
 
 	it('delete a single category', function(done) {
-		server.get('db').db.run('INSERT INTO categories (name) VALUES(\'test category\')', function(error) {
-			if (error !== null) {
-				throw new Error('could not insert data');
-			}
+		server.get('db').db.run('INSERT INTO categories (name) VALUES(\'test category\')', function() {
+			const categoryId = this.lastID;
 
 			Request(server)
-				.delete('/api/categories/' + this.lastID)
+				.delete('/api/categories/' + categoryId)
 				.expect('Access-Control-Allow-Origin', '*')
 				.expect('Content-Type', /json/)
 				.expect(200)
-				.expect({ status: 200, message: 'success' }, done);
+				.expect({ status: 200, message: 'success' })
+				.end(function(error) {
+					server.get('db').db.run('DELETE FROM categories WHERE id = ?', [ categoryId ], function() {
+						if (error) return done(error);
+						done();
+					});
+				});
 		});
 	});
 

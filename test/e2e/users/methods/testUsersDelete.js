@@ -10,18 +10,18 @@ module.exports = function() {
 		server = require('../../helpers/mockServer.js');
 	});
 
-	it('delete a single dish', function(done) {
-		server.get('db').db.run('INSERT INTO dishes (name, price) VALUES(?, ?)', [ 'spaghetti', 2399 ], function() {
-			const dishId = this.lastID;
+	it('delete a single user', function(done) {
+		server.get('db').db.run('INSERT INTO users (username, password, role, email) VALUES(?, ?, ?, ?)', [ 'anonymous', 'mine', 'admin', 'anon@blackhat.com' ], function() {
+			const userId = this.lastID;
 
 			Request(server)
-				.delete('/api/dishes/' + dishId)
+				.delete('/api/users/' + userId)
 				.expect('Access-Control-Allow-Origin', '*')
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.expect({ status: 200, message: 'success' })
 				.end(function(error) {
-					server.get('db').db.run('DELETE FROM dishes WHERE id = ?', [ dishId ], function() {
+					server.get('db').db.run('DELETE FROM users WHERE id = ?', [ userId ], function() {
 						if (error) return done(error);
 						done();
 					});
@@ -31,7 +31,7 @@ module.exports = function() {
 
 	it('fail when id is not a number', function(done) {
 		Request(server)
-			.delete('/api/dishes/abc')
+			.delete('/api/users/avc')
 			.expect('Access-Control-Allow-Origin', '*')
 			.expect('Content-Type', /json/)
 			.expect(422)

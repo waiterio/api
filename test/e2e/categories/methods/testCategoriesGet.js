@@ -11,20 +11,21 @@ module.exports = function() {
 	});
 
 	it('return a single category', function(done) {
-		server.get('db').db.serialize(function() {
-			server.get('db').db.run('INSERT INTO categories (name) VALUES(\'test category\')', function() {
-				Request(server)
-					.get('/api/categories/' + this.lastID)
-					.expect('Access-Control-Allow-Origin', '*')
-					.expect('Content-Type', /json/)
-					.end(function(err, res) {
-						Assert.equal(res.status, 200);
-					});
-			});
+		server.get('db').db.run('INSERT INTO categories (name) VALUES(?)', [ 'super meals' ], function() {
+			const categoryId = this.lastID;
 
-			server.get('db').db.run('DELETE FROM categories WHERE name = \'test category\'', function() {
-				done();
-			});
+			Request(server)
+				.get('/api/categories/' + categoryId)
+				.expect('Access-Control-Allow-Origin', '*')
+				.expect('Content-Type', /json/)
+				.expect(200)
+				.expect({ id: 1, name: 'super meals' })
+				.end(function(error) {
+					server.get('db').db.run('DELETE FROM categories WHERE id = ?', [ categoryId ], function() {
+						if (error) return done(error);
+						done();
+					});
+				});
 		});
 	});
 
@@ -39,14 +40,16 @@ module.exports = function() {
 
 	it('return a all categories', function(done) {
 		server.get('db').db.serialize(function() {
-			server.get('db').db.run('INSERT INTO categories (name) VALUES(\'sides\')');
-			server.get('db').db.run('INSERT INTO categories (name) VALUES(\'burgers\')');
-			server.get('db').db.run('INSERT INTO categories (name) VALUES(\'drinks and cocktails\')');
+			const addCategoryQuery = 'INSERT INTO categories (name) VALUES (?)';
+
+			server.get('db').db.run(addCategoryQuery, [ 'wine' ]);
+			server.get('db').db.run(addCategoryQuery, [ 'burgers' ]);
+			server.get('db').db.run(addCategoryQuery, [ 'vegan' ]);
 
 			const expectedResultList = [
-				{ id: 1, name: 'sides' },
+				{ id: 1, name: 'wine' },
 				{ id: 2, name: 'burgers' },
-				{ id: 3, name: 'drinks and cocktails' }
+				{ id: 3, name: 'vegan' }
 			];
 
 			Request(server)
@@ -55,8 +58,9 @@ module.exports = function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.expect(expectedResultList)
-				.end(function() {
-					server.get('db').db.run('DELETE FROM categories WHERE name IN (\'sides\',\'burgers\',\'drinks and cocktails\')', function() {
+				.end(function(error) {
+					server.get('db').db.run('DELETE FROM categories WHERE id IN (?)', [ 1, 2, 3 ].join(','), function() {
+						if (error) return done(error);
 						done();
 					});
 				});

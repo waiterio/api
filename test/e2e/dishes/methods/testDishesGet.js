@@ -11,20 +11,30 @@ module.exports = function() {
 	});
 
 	it('return a single dish', function(done) {
-		server.get('db').db.serialize(function() {
-			server.get('db').db.run('INSERT INTO dishes (name,price) VALUES(\'test dish\',2250)', function() {
-				Request(server)
-					.get('/api/dishes/' + this.lastID)
-					.expect('Access-Control-Allow-Origin', '*')
-					.expect('Content-Type', /json/)
-					.end(function(err, res) {
-						Assert.equal(res.status, 200);
-					});
-			});
+		server.get('db').db.run('INSERT INTO dishes (name, price) VALUES(?, ?)', [ 'tuna burger', 980 ], function() {
+			const dishId = this.lastID;
 
-			server.get('db').db.run('DELETE FROM dishes WHERE name = \'test dish\' AND price = 2250', function() {
-				done();
-			});
+			const expectedDishData = {
+				"categories_id": null,
+				"description": null,
+				"id": 1,
+				"image": null,
+				"name": "tuna burger",
+				"price": 980
+			};
+
+			Request(server)
+				.get('/api/dishes/' + dishId)
+				.expect('Access-Control-Allow-Origin', '*')
+				.expect('Content-Type', /json/)
+				.expect(200)
+				.expect(expectedDishData)
+				.end(function(error) {
+					server.get('db').db.run('DELETE FROM dishes WHERE id = ?', [ dishId ], function() {
+						if (error) return done(error);
+						done();
+					});
+				});
 		});
 	});
 
@@ -40,14 +50,16 @@ module.exports = function() {
 	it('return a all dishes', function(done) {
 
 		server.get('db').db.serialize(function() {
-			server.get('db').db.run('INSERT INTO dishes (name,price) VALUES(\'cheeseburger\', 1450)');
-			server.get('db').db.run('INSERT INTO dishes (name,price) VALUES(\'fries\', 299)');
-			server.get('db').db.run('INSERT INTO dishes (name,price) VALUES(\'pizza\', 1999)');
+			const addDishQuery = 'INSERT INTO dishes (name, price) VALUES(?, ?)';
+
+			server.get('db').db.run(addDishQuery, [ 'cheeseburger', 700 ]);
+			server.get('db').db.run(addDishQuery, [ 'avocado sauce', 150 ]);
+			server.get('db').db.run(addDishQuery, [ 'sweet potato fries', 300 ]);
 
 			const expectedResultList = [
-				{ categories_id: null, description: null, image: null, id: 1, name: 'cheeseburger', price: 1450 },
-				{ categories_id: null, description: null, image: null, id: 2, name: 'fries', price: 299 },
-				{ categories_id: null, description: null, image: null, id: 3, name: 'pizza', price: 1999 },
+				{ categories_id: null, description: null, image: null, id: 1, name: 'cheeseburger', price: 700 },
+				{ categories_id: null, description: null, image: null, id: 2, name: 'avocado sauce', price: 150 },
+				{ categories_id: null, description: null, image: null, id: 3, name: 'sweet potato fries', price: 300 }
 			];
 
 			Request(server)
@@ -56,8 +68,9 @@ module.exports = function() {
 				.expect('Content-Type', /json/)
 				.expect(200)
 				.expect(expectedResultList)
-				.end(function() {
-					server.get('db').db.run('DELETE FROM categories WHERE name IN (\'cheeseburger\',\'fries\',\'pizza\')', function() {
+				.end(function(error) {
+					server.get('db').db.run('DELETE FROM categories WHERE id IN (?)', [ 1, 2, 3 ].join(','), function() {
+						if (error) return done(error);
 						done();
 					});
 				});

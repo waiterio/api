@@ -3,7 +3,6 @@
 const Winston = require('winston');
 
 let logger = new (Winston.Logger)({
-	exitOnError: false,
 	levels: {
 		info: 0,
 		warn: 0,

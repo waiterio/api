@@ -11,7 +11,7 @@ module.exports = function() {
 	});
 
 	it('create a category', function(done) {
-		const postData = { name: 'category1' };
+		const postData = { name: 'special category' };
 
 		Request(server)
 			.post('/api/categories/')
@@ -19,9 +19,10 @@ module.exports = function() {
 			.expect('Access-Control-Allow-Origin', '*')
 			.expect('Content-Type', /json/)
 			.expect(200)
-			.end(function(error, res) {
-				Assert.isNumber(res.body.id);
-				server.get('db').db.run('DELETE FROM categories WHERE id = ?', res.body.id, function() {
+			.expect({ id: 4 })
+			.end(function(error) {
+				server.get('db').db.run('DELETE FROM categories WHERE id = ?', [ 1 ], function() {
+					if (error) return done(error);
 					done();
 				});
 			});
