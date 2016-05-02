@@ -15,5 +15,11 @@ ratings:
   - "**.py"
 
 exclude_paths:
+- .gitignore
+- .travis.yml
+- .codecov.yml
+- .codeclimate.yml
+- README.md
 - node_modules/**/*
-- tests/**/*
+- test/**/*
+- codeclimate.yml

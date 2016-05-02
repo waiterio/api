@@ -84,7 +84,7 @@ module.exports.getUpdateQueryData = function(data) {
 	if (typeof data !== 'undefined') {
 		data.forEach(function(value) {
 			if (typeof value.input !== 'undefined') {
-				queryParts.push(value.field + '=?');
+				queryParts.push(`${value.field}=?`);
 				replacementVars.push(value.input);
 			}
 		});

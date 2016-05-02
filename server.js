@@ -43,7 +43,7 @@ App.use(function(req, res) {
 });
 
 App.listen(process.env.PORT || Settings.port, function() {
-	Log.info('server started in %s environment', Settings.environment, { server: this.address() })
+	Log.info('server started in %s environment', Settings.environment, { server: this.address() });
 });
 
 module.exports = App;

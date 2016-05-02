@@ -15,7 +15,7 @@ module.exports.getRepo = function(db) {
 		},
 
 		deleteRecord: function(queryOptions, id, callback) {
-			db.run(`DELETE FROM ${queryOptions.table} WHERE id = ?`.trim(), id, callback)
+			db.run(`DELETE FROM ${queryOptions.table} WHERE id = ?`.trim(), id, callback);
 		},
 
 		getRecords: function(queryOptions, callback) {

@@ -2,7 +2,7 @@
 
 const Winston = require('winston');
 
-let logger = new (Winston.Logger)({
+const logger = new (Winston.Logger)({
 	levels: {
 		info: 0,
 		warn: 0,
@@ -27,7 +27,7 @@ logger.add(Winston.transports.File, {
 	level: 'error'
 });
 
-if(process.env.NODE_ENV === 'test') {
+if (process.env.NODE_ENV === 'test') {
 	logger.remove('console-log');
 	logger.remove('file-log');
 	logger.remove('exceptions-log');

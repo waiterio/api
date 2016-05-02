@@ -19,7 +19,7 @@ module.exports.getOrder = function(req, res) {
 	const orderId = parseInt(req.params.id, 10);
 
 	req.app.get('db').action.getRecord({ table: 'orders' }, orderId, function(error, orderRow) {
-		let orderObject = orderRow;
+		const orderObject = orderRow;
 
 		const orderItemQuery = 'SELECT orderitems.id, dishes.name, dishes.price, dishes.description, dishes.id as dishes_id ' +
 			'FROM orderitems JOIN dishes ON orderitems.dishes_id = dishes.id ' +
@@ -29,8 +29,8 @@ module.exports.getOrder = function(req, res) {
 			return res.status(500).json(error);
 		}
 
-		req.app.get('db').db.all(orderItemQuery, orderObject.id, function(error, orderItemRows) {
-			if (error !== null) {
+		req.app.get('db').db.all(orderItemQuery, orderObject.id, function(errorOrderItem, orderItemRows) {
+			if (errorOrderItem !== null) {
 				return res.status(500).json(error);
 			}
 

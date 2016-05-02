@@ -21,16 +21,15 @@ module.exports = function(options) {
 		DB = new SQLite.Database(options.database);
 		Log.info('connection to database established', { file: DB.filename, mode: DB.mode });
 	} else {
-		throw new Error('no database file given')
+		throw new Error('no database file given');
 	}
 
-	if (options.database == ':memory:') {
+	if (options.database === ':memory:') {
 		DB.exec(FileSystem.readFileSync('./memorydb.sql', 'utf-8'));
 	}
 
 	return {
 		action: Repo.getRepo(DB),
 		db: DB
-	}
+	};
 };
-
