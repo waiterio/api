@@ -1,4 +1,4 @@
-const Helpers = require('../../../common/databaseHelpers.js');
+const Helpers = require('../../../../common/databaseHelpers.js');
 const Assert = require('chai').assert;
 
 module.exports = function() {

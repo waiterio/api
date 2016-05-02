@@ -18,7 +18,7 @@ module.exports.updateUser = function(req, res) {
 	const validationResult = Validator.validate(passwordData);
 
 	if (validationResult.status === true) {
-		const dbData = DBHelpers.getUpdateData(passwordData);
+		const dbData = DBHelpers.getUpdateQueryData(passwordData);
 
 		req.app.get('db').action.updateRecord({ table: 'users' }, dbData, userId, function(error) {
 			if (error !== null) {

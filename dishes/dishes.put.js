@@ -4,7 +4,7 @@ const Validator = require('../common/validator.js');
 const DBHelpers = require('../common/databaseHelpers.js');
 
 module.exports.replaceDish = function(req, res) {
-	const dishesId = parseInt(req.params.id, 10);
+	const dishId = parseInt(req.params.id, 10);
 	const dishData = [
 		{ field: 'name', input: req.body.name, rules: { notEmpty: false, type: 'string' } },
 		{ field: 'price', input: req.body.price, rules: { notEmpty: false, type: 'number' } },
@@ -15,14 +15,10 @@ module.exports.replaceDish = function(req, res) {
 	const validationResult = Validator.validate(dishData);
 
 	if (validationResult.status === true) {
-		req.app.get('db').action.updateRecord({ table: 'dishes' }, DBHelpers.getInsertQueryData(dishData), dishesId, function(error) {
-			if (error !== null) {
-				return res.status(500).json(error);
-			}
-
+		req.app.get('db').action.updateRecord({ table: 'dishes' }, DBHelpers.getInsertQueryData(dishData), dishId, function() {
 			return res.json({ status: 200, message: 'success' });
 		});
 	} else {
-		return res.status(validationResult.statusCode).json(validationResult.message);
+		return res.status(validationResult.statusCode).json({ status: validationResult.statusCode, message: validationResult.message });
 	}
 };

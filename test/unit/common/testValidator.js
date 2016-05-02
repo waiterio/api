@@ -1,6 +1,6 @@
 'use strict';
 
-const Validator = require('../../common/validator.js');
+const Validator = require('../../../common/validator.js');
 const Assert = require('chai').assert;
 
 describe('validator should', function() {
@@ -61,7 +61,7 @@ describe('validator should', function() {
 	});
 
 	it('succeed with not empty integer data', function () {
-		const validationData = [ { field: 'id', input: 38, rules: { notEmpty: true, type: 'number' } } ];
+		const validationData = [ { field: 'id', input: 83, rules: { notEmpty: true, type: 'number' } } ];
 		Assert.equal(Validator.validate(validationData).status, true);
 	});
 });

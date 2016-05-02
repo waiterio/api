@@ -1,7 +1,6 @@
 'use strict';
 
 const DBHelpers = require('./databaseHelpers.js');
-const Log = require('./logging.js');
 
 module.exports.getRepo = function(db) {
 	return {

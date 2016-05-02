@@ -6,7 +6,7 @@ const Settings = require('../settings');
 module.exports = function(req, res, next) {
 	const accessToken = (req.body && req.body.access_token) || req.headers['access-token'];
 
-	if (req.method === 'OPTIONS') {
+	if (req.method === 'OPTIONS' || process.env.NODE_ENV === 'test') {
 		return next();
 	}
 

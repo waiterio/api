@@ -18,7 +18,7 @@ module.exports.validate = function(data) {
 
 			// Checking Data Type
 			if (typeof currentRule.type !== 'undefined') {
-				if (typeof value.input !== 'undefined' && typeof value.input !== currentRule.type) {
+				if ((typeof value.input !== 'undefined' && typeof value.input !== currentRule.type) || (currentRule.type === 'number' && currentRule.notEmpty === true && isNaN(value.input))) {
 					lastError.status = false;
 					lastError.statusCode = 422;
 					lastError.message = `input for ${value.field} ('${value.input}') is not of type ${currentRule.type}`;

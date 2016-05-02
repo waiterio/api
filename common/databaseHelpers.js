@@ -77,7 +77,7 @@ module.exports.getInsertQueryData = function(data) {
 	return { fields: queryFields, values: queryValues, fieldQuery: `(${queryFields.join()})`, valueQuery: `(${queryValues.join()})`, vars: replacementVars };
 };
 
-module.exports.getUpdateData = function(data) {
+module.exports.getUpdateQueryData = function(data) {
 	const queryParts = [];
 	const replacementVars = [];
 

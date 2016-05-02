@@ -1,33 +1,30 @@
-const Helpers = require('../../../common/databaseHelpers.js');
+const DBHelpers = require('../../../../common/databaseHelpers.js');
 const Assert = require('chai').assert;
 
 module.exports = function() {
-	it('return empty objects without data', function() {
-		const queryData = Helpers.getInsertQueryData();
+	it('return empty strings without data', function() {
+		const queryData = DBHelpers.getUpdateQueryData();
 
-		Assert.equal(queryData.fieldQuery, '()');
-		Assert.equal(queryData.valueQuery, '()');
+		Assert.equal(queryData.updateQuery, '');
 		Assert.deepEqual(queryData.vars, []);
 	});
 
 	it('return query parts with one item', function() {
-		const queryData = Helpers.getInsertQueryData([
+		const queryData = DBHelpers.getUpdateQueryData([
 			{ field: 'email', input: 'ralph@lauren.com', rules: { notEmpty: true, type: 'string' } } ]);
 
-		Assert.equal(queryData.fieldQuery, '(email)');
-		Assert.equal(queryData.valueQuery, '(?)');
+		Assert.equal(queryData.updateQuery, 'email=?');
 		Assert.deepEqual(queryData.vars, [ 'ralph@lauren.com' ]);
 	});
 
 	it('return query parts with multiple items', function() {
-		const queryData = Helpers.getInsertQueryData([
+		const queryData = DBHelpers.getUpdateQueryData([
 			{ field: 'full_name', input: 'Peter Pan', rules: { notEmpty: true, type: 'string' } },
 			{ field: 'counter', input: 9, rules: { notEmpty: true, type: 'number' } },
 			{ field: 'username', input: 'pan99', rules: { notEmpty: true, type: 'string' } }
 		]);
 
-		Assert.equal(queryData.fieldQuery, '(full_name,counter,username)');
-		Assert.equal(queryData.valueQuery, '(?,?,?)');
+		Assert.equal(queryData.updateQuery, 'full_name=?,counter=?,username=?');
 		Assert.deepEqual(queryData.vars, [ 'Peter Pan', 9, 'pan99' ]);
 	});
 };

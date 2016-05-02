@@ -8,10 +8,10 @@ const Express = require('express');
 const Winston = require('winston');
 
 // Custom Modules
-const Database = require('./common/sqlite.js');
 const Log = require('./common/logging.js');
 const RequestValidation = require('./authentication/validateRequest');
 const Settings = require('./settings.js');
+const Database = require('./common/sqlite.js')({ database: Settings.database, environment: Settings.environment });
 
 const App = Express();
 
@@ -25,8 +25,8 @@ App.set('log', Log);
 // Middleware
 App.use(BodyParser.json());
 App.use(Compression());
-//App.use(CrossOrigin());
-//App.use('/api/*', RequestValidation);
+App.use(CrossOrigin());
+App.use('/api/*', RequestValidation);
 
 // Authentication Routes
 App.use('/auth', require('./authentication/router.js'));
