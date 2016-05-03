@@ -44,26 +44,27 @@ module.exports = function() {
 
 			server.get('db').db.run(addCategoryQuery, [ 'wine' ]);
 			server.get('db').db.run(addCategoryQuery, [ 'burgers' ]);
-			server.get('db').db.run(addCategoryQuery, [ 'vegan' ]);
+			server.get('db').db.run(addCategoryQuery, [ 'vegan' ], function() {
 
-			const expectedResultList = [
-				{ id: 1, name: 'wine' },
-				{ id: 2, name: 'burgers' },
-				{ id: 3, name: 'vegan' }
-			];
+				const expectedResultList = [
+					{ id: 1, name: 'wine' },
+					{ id: 2, name: 'burgers' },
+					{ id: 3, name: 'vegan' }
+				];
 
-			Request(server)
-				.get('/api/categories/')
-				.expect('Access-Control-Allow-Origin', '*')
-				.expect('Content-Type', /json/)
-				.expect(200)
-				.expect(expectedResultList)
-				.end(function(error) {
-					server.get('db').db.run('DELETE FROM categories WHERE id IN (?)', [ 1, 2, 3 ].join(','), function() {
-						if (error) return done(error);
-						done();
+				Request(server)
+					.get('/api/categories/')
+					.expect('Access-Control-Allow-Origin', '*')
+					.expect('Content-Type', /json/)
+					.expect(200)
+					.expect(expectedResultList)
+					.end(function(error) {
+						server.get('db').db.run('DELETE FROM categories WHERE id IN (?)', [ 1, 2, 3 ].join(','), function() {
+							if (error) return done(error);
+							done();
+						});
 					});
-				});
+			});
 		});
 	});
 };
