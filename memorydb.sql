@@ -39,3 +39,5 @@ CREATE TABLE users (
   email    TEXT                NOT NULL
 );
 
+
+INSERT INTO users (username, email, role, password) VALUES ('admin', 'admin@waiter.io', 'admin', '$2a$10$3AjfvvDOOTZpK65bgMgdg.d4W4zc2WwH38wuDyNm0JGcjWNy77bB.')

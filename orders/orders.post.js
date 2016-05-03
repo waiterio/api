@@ -34,6 +34,6 @@ module.exports.addOrder = function(req, res) {
 			});
 		});
 	} else {
-		return res.status(validationResult.statusCode).json(validationResult.message);
+		return res.status(validationResult.statusCode).json({ status: validationResult.statusCode, message: validationResult.message });
 	}
 };

@@ -30,11 +30,7 @@ module.exports.getToken = function(req, res) {
 		return res.status(401).json({ status: 401, message: 'Invalid credentials' });
 	}
 
-	req.app.get('db').db.get('SELECT * FROM users WHERE username = ?', username, function(error, userObject) {
-		if (error !== null) {
-			return res.status(500).json({ status: 500, message: error });
-		}
-
+	req.app.get('db').db.get('SELECT * FROM users WHERE username = ?', [username], function(error, userObject) {
 		if (userObject !== null && Passwords.comparePassword(password, userObject.password)) {
 			return res.json(generateToken(userObject));
 		}

@@ -5,11 +5,13 @@ const Settings = require('../settings.js');
 
 const Logger = new (Winston.Logger)({
 	levels: {
-		info: 0,
-		warn: 0,
-		error: 0
+		data: 1,
+		info: 2,
+		warn: 3,
+		error: 4
 	},
 	colors: {
+		data: 'green',
 		info: 'blue',
 		warn: 'yellow',
 		error: 'red'
