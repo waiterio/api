@@ -2,7 +2,8 @@
 
 [![Build Status](https://travis-ci.org/waiterio/api.svg?branch=master)](https://travis-ci.org/waiterio/api)
 [![Code Climate](https://codeclimate.com/github/waiterio/api/badges/gpa.svg)](https://codeclimate.com/github/waiterio/api)
-[![codecov](https://codecov.io/gh/waiterio/api/branch/development/graph/badge.svg)](https://codecov.io/gh/waiterio/api)
+[![CodeCov](https://codecov.io/gh/waiterio/api/branch/development/graph/badge.svg)](https://codecov.io/gh/waiterio/api)
+[![Dependencies](https://david-dm.org/waiterio/api.svg)](https://david-dm.org/waiterio/api)
 
 The api for the frontend of the waiter service build with postgres and node. To get started, read the 
 installation instructions below. If you have a feature or bug, submit an issue.
