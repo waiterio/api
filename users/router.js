@@ -3,10 +3,10 @@
 const Express = require('express');
 const router = Express.Router();
 
-const getUsers = require('./users.get.js');
-const postUsers = require('./users.post.js');
-const putUsers = require('./users.put.js');
-const deleteUsers = require('./users.delete.js');
+const getUsers = require('./usersGet.js');
+const postUsers = require('./usersPost.js');
+const putUsers = require('./usersPut.js');
+const deleteUsers = require('./usersDelete.js');
 
 // GET Requests
 router.get('/', function(req, res) {

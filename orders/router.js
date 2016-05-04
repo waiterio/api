@@ -3,8 +3,8 @@
 const Express = require('express');
 const router = Express.Router();
 
-const getOrders = require('./orders.get.js');
-const postOrders = require('./orders.post.js');
+const getOrders = require('./ordersGet.js');
+const postOrders = require('./ordersPost.js');
 
 
 // GET Requests

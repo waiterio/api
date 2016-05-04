@@ -3,10 +3,10 @@
 const Express = require('express');
 const router = Express.Router();
 
-const getDishes = require('./dishes.get.js');
-const postDishes = require('./dishes.post.js');
-const deleteDishes = require('./dishes.delete.js');
-const putDishes = require('./dishes.put.js');
+const getDishes = require('./dishesGet.js');
+const postDishes = require('./dishesPost.js');
+const deleteDishes = require('./dishesDelete.js');
+const putDishes = require('./dishesPut.js');
 
 // GET Requests
 router.get('/', function(req, res) {

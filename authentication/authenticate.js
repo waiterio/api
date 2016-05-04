@@ -21,7 +21,6 @@ function generateToken(userObject) {
 	};
 }
 
-
 module.exports.getToken = function(req, res) {
 	const username = req.body.username;
 	const password = req.body.password;

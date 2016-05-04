@@ -6,7 +6,7 @@ const Settings = require('../settings');
 module.exports = function(req, res, next) {
 	req.app.get('log').info(`${req.method} ${req.originalUrl}`);
 
-	const accessToken = (req.body && req.body.access_token) || req.headers['access-token'];
+	const accessToken = (req.body && req.body.access_token) || req.headers[ 'access-token' ];
 
 	if (req.method === 'OPTIONS' || process.env.NODE_ENV === 'test') {
 		return next();
@@ -16,8 +16,8 @@ module.exports = function(req, res, next) {
 		let decodedUserInfo;
 
 		try {
-			decodedUserInfo = Jwt.decode(accessToken, Settings.secret);
-		} catch (ex) {
+			decodedUserInfo = Jwt.decode(accessToken, Settings.secret, false);
+		} catch(ex) {
 			// Thrown when access token has been tampered with
 			req.app.get('log').warn('authentication token could not be decoded', { token: accessToken });
 			return res.status(401).json({ status: 401, message: 'Invalid Token or Key' });
