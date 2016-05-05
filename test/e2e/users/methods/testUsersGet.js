@@ -1,13 +1,13 @@
 'use strict';
 
 const Request = require('supertest');
-const Assert = require('chai').assert;
 
 module.exports = function() {
 	let server;
 
-	beforeEach(function() {
+	beforeEach(function(done) {
 		server = require('../../helpers/mockServer.js');
+		server.get('db').db.run('DELETE FROM users', done);
 	});
 
 	it('return a single user', function(done) {
@@ -26,13 +26,7 @@ module.exports = function() {
 				.expect('Access-Control-Allow-Origin', '*')
 				.expect('Content-Type', /json/)
 				.expect(200)
-				.expect(expectedUserData)
-				.end(function(error) {
-					server.get('db').db.run('DELETE FROM users WHERE id = ?', userId, function() {
-						if (error) return done(error);
-						done();
-					});
-				});
+				.expect(expectedUserData, done);
 		});
 	});
 
@@ -48,7 +42,7 @@ module.exports = function() {
 
 	it('return a all users', function(done) {
 		server.get('db').db.serialize(function() {
-			const addUserQuery = 'INSERT INTO users (username, password, role, email) VALUES(?, ?, ?, ?)'
+			const addUserQuery = 'INSERT INTO users (username, password, role, email) VALUES(?, ?, ?, ?)';
 
 			server.get('db').db.run(addUserQuery, [ 'generic', 'secret', 'user', 'g@neric.com' ]);
 			server.get('db').db.run(addUserQuery, [ 'admin', 'mydogsname', 'admin', 'admin@waiter.io' ]);
@@ -65,13 +59,7 @@ module.exports = function() {
 				.expect('Access-Control-Allow-Origin', '*')
 				.expect('Content-Type', /json/)
 				.expect(200)
-				.expect(expectedResultList)
-				.end(function(error) {
-					if (error) return done(error);
-					server.get('db').db.run('DELETE FROM users WHERE id IN (?,?,?)', [ 1, 2, 3 ], function() {
-						done();
-					});
-				});
+				.expect(expectedResultList, done);
 		});
 	});
 };

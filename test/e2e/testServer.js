@@ -16,7 +16,7 @@ describe('server should return', function() {
 			.expect('Content-Type', /json/, done);
 	});
 
-	it('a 404 when the endpoint does not exist', function (done) {
+	it('a 404 when the endpoint does not exist', function(done) {
 		Request(server)
 			.get('/nonexistent')
 			.expect(404)

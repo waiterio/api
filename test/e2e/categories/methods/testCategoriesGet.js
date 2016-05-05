@@ -1,13 +1,13 @@
 'use strict';
 
 const Request = require('supertest');
-const Assert = require('chai').assert;
 
 module.exports = function() {
 	let server;
 
-	beforeEach(function() {
+	beforeEach(function(done) {
 		server = require('../../helpers/mockServer.js');
+		server.get('db').db.run('DELETE FROM categories', done)
 	});
 
 	it('return a single category', function(done) {
@@ -19,13 +19,7 @@ module.exports = function() {
 				.expect('Access-Control-Allow-Origin', '*')
 				.expect('Content-Type', /json/)
 				.expect(200)
-				.expect({ id: 1, name: 'super meals' })
-				.end(function(error) {
-					server.get('db').db.run('DELETE FROM categories WHERE id = ?', [ categoryId ], function() {
-						if (error) return done(error);
-						done();
-					});
-				});
+				.expect({ id: 1, name: 'super meals' }, done);
 		});
 	});
 
@@ -57,13 +51,7 @@ module.exports = function() {
 					.expect('Access-Control-Allow-Origin', '*')
 					.expect('Content-Type', /json/)
 					.expect(200)
-					.expect(expectedResultList)
-					.end(function(error) {
-						server.get('db').db.run('DELETE FROM categories WHERE id IN (?)', [ 1, 2, 3 ].join(','), function() {
-							if (error) return done(error);
-							done();
-						});
-					});
+					.expect(expectedResultList, done);
 			});
 		});
 	});

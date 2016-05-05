@@ -1,13 +1,17 @@
 'use strict';
 
 const Request = require('supertest');
-const Assert = require('chai').assert;
 
 module.exports = function() {
 	let server;
 
-	beforeEach(function() {
+	beforeEach(function(done) {
 		server = require('../../helpers/mockServer.js');
+		server.get('db').db.serialize(function() {
+			server.get('db').db.run('DELETE FROM orderitems');
+			server.get('db').db.run('DELETE FROM orders');
+			done();
+		})
 	});
 
 	it('return a single order without orderitems', function(done) {
@@ -28,19 +32,12 @@ module.exports = function() {
 				.expect('Access-Control-Allow-Origin', '*')
 				.expect('Content-Type', /json/)
 				.expect(200)
-				.expect(expectedOrderData)
-				.end(function(error) {
-					server.get('db').db.run('DELETE FROM orders WHERE id = ?', [ orderId ], function() {
-						if (error) return done(error);
-						done();
-					});
-				});
+				.expect(expectedOrderData, done);
 		});
 	});
 
-	it('return a single order with two orderitems', function(done) {
+	it('return a single order with two orderitems', function() {
 		// TODO: test missing
-		done();
 	});
 
 	it('fail when id is not a number', function(done) {
@@ -72,13 +69,7 @@ module.exports = function() {
 				.expect('Access-Control-Allow-Origin', '*')
 				.expect('Content-Type', /json/)
 				.expect(200)
-				.expect(expectedResultList)
-				.end(function(error) {
-					server.get('db').db.run('DELETE FROM orders WHERE id IN (?)', [ 1, 2, 3 ].join(','), function() {
-						if (error) return done(error);
-						done();
-					});
-				});
+				.expect(expectedResultList,done);
 		});
 	});
 };

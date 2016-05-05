@@ -1,20 +1,20 @@
 'use strict';
 
 const Request = require('supertest');
-const Assert = require('chai').assert;
 
 module.exports = function() {
 	let server;
 
-	beforeEach(function() {
+	beforeEach(function(done) {
 		server = require('../../helpers/mockServer.js');
+		server.get('db').db.run('DELETE FROM categories', done)
 	});
 
 	it('update a category', function(done) {
 		const postData = { name: 'categorySecret' };
 
 		server.get('db').db.serialize(function() {
-			server.get('db').db.run('INSERT INTO categories (name) VALUES(?)', [ 'burger king' ], function(error) {
+			server.get('db').db.run('INSERT INTO categories (name) VALUES(?)', [ 'burger king' ], function() {
 				const categoryId = this.lastID;
 
 				Request(server)
@@ -23,13 +23,7 @@ module.exports = function() {
 					.expect('Access-Control-Allow-Origin', '*')
 					.expect('Content-Type', /json/)
 					.expect(200)
-					.expect({ status: 200, message: 'success' })
-					.end(function() {
-						server.get('db').db.run('DELETE FROM categories WHERE id = ?', [ categoryId ], function() {
-							if (error) return done(error);
-							done();
-						});
-					});
+					.expect({ status: 200, message: 'success' }, done);
 			});
 		});
 	});
