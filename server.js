@@ -5,7 +5,6 @@ const BodyParser = require('body-parser');
 const Compression = require('compression');
 const CrossOrigin = require('cors');
 const Express = require('express');
-const Winston = require('winston');
 
 // Custom Modules
 const Log = require('./common/logging.js');
@@ -24,7 +23,7 @@ App.set('log', Log);
 
 // Middleware
 App.use(BodyParser.json());
-App.use(Compression());
+App.use(Compression({}));
 App.use(CrossOrigin());
 App.use('/api/*', RequestValidation);
 
