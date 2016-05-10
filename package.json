@@ -1,13 +1,13 @@
 {
   "name": "waiter-api",
   "version": "0.0.1",
-  "description": "a restaurant ordering system",
+  "description": "a restaurant ordering api",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node_modules/.bin/mocha -R spec --recursive test/",
+    "test": "node_modules/.bin/mocha --recursive",
     "coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- --recursive",
-    "dev": "nodemon server.js"
+    "dev": "node_modules/.bin/nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -21,8 +21,7 @@
   "homepage": "https://github.com/waiterio/api#readme",
   "dependencies": {
     "bcryptjs": "^2.3.0",
-    "bluebird": "^3.3.3",
-    "body-parser": "^1.15.0",
+    "body-parser": "^1.15.1",
     "compression": "^1.6.1",
     "cors": "^2.7.1",
     "express": "^4.13.4",
@@ -40,6 +39,7 @@
     "eslint-plugin-react": "^5.0.1",
     "istanbul": "^0.4.3",
     "mocha": "^2.4.5",
+    "nodemon": "^1.9.2",
     "supertest": "^1.2.0"
   }
 }
