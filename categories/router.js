@@ -2,10 +2,11 @@
 
 const Express = require('express');
 const Router = Express.Router();
-const getCategories = require('./categories.get.js');
-const postCategories = require('./categories.post.js');
-const deleteCategories = require('./categories.delete.js');
-const putCategories = require('./categories.put.js');
+
+const getCategories = require('./categoriesGet.js');
+const postCategories = require('./categoriesPost.js');
+const deleteCategories = require('./categoriesDelete.js');
+const putCategories = require('./categoriesPut.js');
 
 // GET Requests
 Router.get('/', function(req, res) {

@@ -21,7 +21,6 @@ function generateToken(userObject) {
 	};
 }
 
-
 module.exports.getToken = function(req, res) {
 	const username = req.body.username;
 	const password = req.body.password;
@@ -30,16 +29,11 @@ module.exports.getToken = function(req, res) {
 		return res.status(401).json({ status: 401, message: 'Invalid credentials' });
 	}
 
-	req.app.get('db').oneOrNone('SELECT * FROM users WHERE username = $1 LIMIT 1', [ username ])
-		.then(function(userObject) {
-			if (userObject !== null && Passwords.comparePassword(password, userObject.password)) {
-				return res.json(generateToken(userObject));
-			}
+	req.app.get('db').db.get('SELECT * FROM users WHERE username = ?', [username], function(error, userObject) {
+		if (userObject !== null && Passwords.comparePassword(password, userObject.password)) {
+			return res.json(generateToken(userObject));
+		}
 
-			return res.status(401).json({ status: 401, message: 'Invalid credentials' });
-		})
-		.catch(function(error) {
-			req.app.get('log').error('selecting user for authentication from database failed', { pgError: error });
-			return res.status(500).json({ status: 500, message: 'DB Error', error: error });
-		});
+		return res.status(401).json({ status: 401, message: 'Invalid credentials' });
+	});
 };
