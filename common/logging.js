@@ -1,9 +1,9 @@
 'use strict';
 
-const Winston = require('winston');
-const Settings = require('../settings.js');
+const winston = require('winston');
+const settings = require('../settings.js');
 
-const Logger = new (Winston.Logger)({
+const Logger = new (winston.Logger)({
 	levels: {
 		data: 1,
 		info: 2,
@@ -17,13 +17,13 @@ const Logger = new (Winston.Logger)({
 		error: 'red'
 	},
 	transports: [
-		new (Winston.transports.Console)({ name: 'console-log', colorize: true }),
-		new (Winston.transports.File)({ name: 'file-log', filename: './logs/general.log' })
+		new (winston.transports.Console)({ name: 'console-log', colorize: true }),
+		new (winston.transports.File)({ name: 'file-log', filename: './logs/general.log' })
 	]
 });
 
-if (Settings.environment === 'production') {
-	Logger.add(Winston.transports.File, {
+if (settings.environment === 'production') {
+	Logger.add(winston.transports.File, {
 		exitOnError: true,
 		name: 'exceptions-log',
 		filename: './logs/error.log',
@@ -33,12 +33,5 @@ if (Settings.environment === 'production') {
 	});
 }
 
-if (process.env.NODE_ENV === 'test') {
-	Logger.remove('console-log');
-	Logger.remove('file-log');
-	if (Settings.environment === 'production') {
-		Logger.remove('exceptions-log');
-	}
-}
 
 module.exports = Logger;
