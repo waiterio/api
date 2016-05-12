@@ -5,7 +5,6 @@ const BodyParser = require('body-parser');
 const Compression = require('compression');
 const CrossOrigin = require('cors');
 const Express = require('express');
-const FileSystem = require('fs');
 
 // Custom Modules
 const Log = require('./common/logging.js');
@@ -17,10 +16,6 @@ const server = Express();
 
 Database.db.run('PRAGMA journal_mode = WAL');
 Database.db.run('PRAGMA synchronous = NORMAL');
-
-FileSystem.access('./logs/', FileSystem.W_OK, (err) => {
-	if (err !== null) FileSystem.mkdirSync('./logs/');
-});
 
 // Setting Global Objects
 server.set('db', Database);
