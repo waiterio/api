@@ -26,6 +26,12 @@ module.exports = function(options) {
 
 	if (options.database === ':memory:') {
 		DB.exec(FileSystem.readFileSync('./memorydb.sql', 'utf-8'));
+	} else {
+		try {
+			FileSystem.access(options.database)
+		} catch(ex) {
+			DB.exec(FileSystem.readFileSync('./memorydb.sql', 'utf-8'));
+		}
 	}
 
 	return {
