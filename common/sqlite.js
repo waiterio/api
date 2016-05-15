@@ -9,6 +9,8 @@ const Log = require('./logging.js');
 const Repo = require('./databaseRepository.js');
 
 module.exports = function(options) {
+	options.database = (process.env.DATABASE || options.database);
+
 	if (options.environment === 'production') {
 		SQLite = require('sqlite3').cached;
 	} else if (options.environment === 'development') {
