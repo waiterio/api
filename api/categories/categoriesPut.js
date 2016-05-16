@@ -1,7 +1,7 @@
 'use strict';
 
-const Validator = require('../common/validator.js');
-const DBHelpers = require('../common/databaseHelpers.js');
+const Validator = require('../../common/validator.js');
+const DBHelpers = require('../../common/databaseHelpers.js');
 
 module.exports.updateCategory = function(req, res) {
 	const categoryId = parseInt(req.params.id, 10);

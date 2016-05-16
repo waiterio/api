@@ -1,6 +1,6 @@
 'use strict';
 
-const Validator = require('../common/validator.js');
+const Validator = require('../..//common/validator.js');
 
 module.exports.removeUser = function(req, res) {
 	const userId = parseInt(req.params.id, 10);

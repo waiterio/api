@@ -1,6 +1,6 @@
 'use strict';
 
-const Validator = require('../common/validator.js');
+const Validator = require('../../common/validator.js');
 
 module.exports.deleteDish = function(req, res) {
 	const dishId = parseInt(req.params.id, 10);

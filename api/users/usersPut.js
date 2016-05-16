@@ -1,8 +1,8 @@
 'use strict';
 
-const Passwords = require('../common/passwords.js');
-const Validator = require('../common/validator.js');
-const DBHelpers = require('../common/databaseHelpers.js');
+const Passwords = require('../../common/passwords.js');
+const Validator = require('../../common/validator.js');
+const DBHelpers = require('../../common/databaseHelpers.js');
 
 module.exports.updateUser = function(req, res) {
 	const userId = parseInt(req.params.id, 10);

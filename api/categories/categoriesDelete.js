@@ -1,6 +1,6 @@
 'use strict';
 
-const Validator = require('../common/validator.js');
+const Validator = require('../../common/validator.js');
 
 module.exports.removeCategory = function(req, res) {
 	const categoryId = parseInt(req.params.id, 10);

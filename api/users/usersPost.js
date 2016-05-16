@@ -1,8 +1,8 @@
 'use strict';
 
-const Passwords = require('../common/passwords.js');
-const Validator = require('../common/validator.js');
-const DBHelpers = require('../common/databaseHelpers.js');
+const Passwords = require('../../common/passwords.js');
+const Validator = require('../../common/validator.js');
+const DBHelpers = require('../../common/databaseHelpers.js');
 
 module.exports.addUser = function(req, res) {
 	const hashedPassword = Passwords.hashPassword(req.body.password);
