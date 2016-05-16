@@ -8,7 +8,7 @@
 The api for the frontend of the waiter service build with postgres and node. To get started, read the 
 installation instructions below. If you have a feature or bug, submit an issue.
 
-## Installation
+## Installation [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 Install the required dependencies using `npm` in the projects' root directory. During the installation
 of the required modules you can grab a cup of coffee.
 
