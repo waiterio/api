@@ -1,0 +1,7 @@
+{
+  "name": "waiter-api",
+  "description": "the javascript service api that accompanies the waiter.io frontend",
+  "repository": "https://github.com/waiterio/api",
+  "logo": "https://avatars2.githubusercontent.com/u/18187768?v=3&s=400",
+  "keywords": ["node", "api", "waiter", "restaurant", "service"]
+}
