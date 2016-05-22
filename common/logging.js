@@ -4,8 +4,6 @@ const fileSystem = require('fs');
 const winston = require('winston');
 const settings = require('../settings.js');
 
-module.exports = getLogger();
-
 function getLogger() {
 	const Logger = new (winston.Logger)({
 		levels: {
@@ -39,9 +37,11 @@ function getLogger() {
 
 	try {
 		fileSystem.accessSync('./logs/', fileSystem.W_OK);
-	} catch(e) {
+	} catch (e) {
 		fileSystem.mkdirSync('./logs/');
 	}
 
 	return Logger;
 }
+
+module.exports = getLogger();

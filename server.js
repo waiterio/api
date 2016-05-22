@@ -14,9 +14,6 @@ const Database = require('./common/sqlite.js')({ database: Settings.database, en
 
 const server = Express();
 
-Database.db.run('PRAGMA journal_mode = WAL');
-Database.db.run('PRAGMA synchronous = NORMAL');
-
 // Setting Global Objects
 server.set('db', Database);
 server.set('log', Log);
