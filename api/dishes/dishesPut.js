@@ -15,7 +15,7 @@ module.exports.replaceDish = function(req, res) {
 	const validationResult = Validator.validate(dishData);
 
 	if (validationResult.status === true) {
-		req.app.get('db').action.updateRecord({ table: 'dishes' }, DBHelpers.getInsertQueryData(dishData), dishId, function() {
+		req.app.get('db').action.updateRecord({ table: 'dishes' }, DBHelpers.getUpdateQueryData(dishData), dishId, function() {
 			return res.json({ status: 200, message: 'success' });
 		});
 	} else {
