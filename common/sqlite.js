@@ -27,7 +27,7 @@ module.exports = function(options) {
 	}
 
 	if (options.database === ':memory:') {
-		DB.exec(FileSystem.readFileSync('./memorydb.sql', 'utf-8'));
+		DB.exec(FileSystem.readFileSync('./bootstrap_db.sql', 'utf-8'));
 	}
 
 	return {
