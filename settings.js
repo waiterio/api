@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	port: 8081,
+	port: 8080,
 	saltRounds: 10,
 	environment: 'development', // development, production
 	secret: 'SuperSecretWaiterIOStuff',
