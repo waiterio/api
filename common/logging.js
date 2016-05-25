@@ -5,7 +5,7 @@ const winston = require('winston');
 const settings = require('../settings.js');
 
 function getLogger() {
-	const Logger = new (winston.Logger)({
+	const loggerObject = new (winston.Logger)({
 		levels: {
 			data: 1,
 			info: 2,
@@ -25,7 +25,7 @@ function getLogger() {
 	});
 
 	if (settings.environment === 'production') {
-		Logger.add(winston.transports.File, {
+		loggerObject.add(winston.transports.File, {
 			exitOnError: true,
 			name: 'exceptions-log',
 			filename: './logs/error.log',
@@ -35,13 +35,18 @@ function getLogger() {
 		});
 	}
 
+	if(process.env.NODE_ENV === 'test') {
+		loggerObject.remove('console-log');
+		loggerObject.remove('file-log');
+	}
+
 	try {
 		fileSystem.accessSync('./logs/', fileSystem.W_OK);
 	} catch (e) {
 		fileSystem.mkdirSync('./logs/');
 	}
 
-	return Logger;
+	return loggerObject;
 }
 
 module.exports = getLogger();

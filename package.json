@@ -1,6 +1,6 @@
 {
   "name": "waiter-api",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "the javascript service api that accompanies the waiter.io frontend",
   "main": "server.js",
   "scripts": {
