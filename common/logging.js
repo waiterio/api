@@ -4,6 +4,9 @@ const fileSystem = require('fs');
 const winston = require('winston');
 const settings = require('../settings.js');
 
+/**
+ * @returns {*}
+ */
 function getLogger() {
 	const Logger = new (winston.Logger)({
 		levels: {
@@ -33,6 +36,11 @@ function getLogger() {
 			humanReadableUnhandledException: false,
 			level: 'error'
 		});
+	}
+
+	if(process.env.NODE_ENV === 'test') {
+		Logger.remove('console-log');
+		Logger.remove('file-log');
 	}
 
 	try {

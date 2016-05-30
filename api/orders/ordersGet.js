@@ -1,11 +1,11 @@
 'use strict';
 
-const DBHelpers = require('../../common/databaseHelpers.js');
-const Validator = require('../../common/validator.js');
+const dbHelpers = require('../../common/databaseHelpers.js');
+const validator = require('../../common/validator.js');
 
 module.exports.getOrders = function(req, res) {
-	const orderBy = DBHelpers.getOrderByQuery(req.query.sort);
-	const limit = DBHelpers.getLimitQuery(req.query.limit);
+	const orderBy = dbHelpers.getOrderByQuery(req.query.sort);
+	const limit = dbHelpers.getLimitQuery(req.query.limit);
 
 	req.app.get('db').action.getRecords({ table: 'orders', orderBy: orderBy, limit: limit }, function(error, data) {
 		return res.json(data);
@@ -17,7 +17,7 @@ module.exports.getOrder = function(req, res) {
 	const orderData = [
 		{ field: 'id', input: orderId, rules: { notEmpty: true, type: 'number' } }
 	];
-	const validationResult = Validator.validate(orderData);
+	const validationResult = validator.validate(orderData);
 
 	if (validationResult.status === true) {
 		req.app.get('db').action.getRecord({ table: 'orders' }, orderId, function(error, orderRow) {

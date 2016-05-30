@@ -1,7 +1,7 @@
 'use strict';
 
-const Validator = require('../../common/validator.js');
-const DBHelpers = require('../../common/databaseHelpers.js');
+const dbHelpers = require('../../common/databaseHelpers.js');
+const validator = require('../../common/validator.js');
 
 module.exports.addOrder = function(req, res) {
 	const orderItems = req.body.orderitems;
@@ -10,11 +10,11 @@ module.exports.addOrder = function(req, res) {
 		{ field: 'ordertimestamp', input: new Date().getTime().toString(), rules: { notEmpty: true, type: 'string' } },
 		{ field: 'tablenumber', input: req.body.tablenumber, rules: { notEmpty: true, type: 'number' } }
 	];
-	const validationResult = Validator.validate(orderData);
+	const validationResult = validator.validate(orderData);
 
 	if (validationResult.status === true) {
 		req.app.get('db').db.serialize(function() {
-			req.app.get('db').action.addRecord({ table: 'orders' }, DBHelpers.getInsertQueryData(orderData), function() {
+			req.app.get('db').action.addRecord({ table: 'orders' }, dbHelpers.getInsertQueryData(orderData), function() {
 				const orderId = this.lastID;
 				req.app.get('db').db.serialize(function() {
 					orderItems.forEach(function(value) {
@@ -22,10 +22,10 @@ module.exports.addOrder = function(req, res) {
 							{ field: 'orders_id', input: parseInt(orderId, 10), rules: { notEmpty: true, type: 'number' } },
 							{ field: 'dishes_id', input: parseInt(value.dishes_id, 10), rules: { notEmpty: true, type: 'number' } }
 						];
-						const validationResultOrderItem = Validator.validate(orderItemData);
+						const validationResultOrderItem = validator.validate(orderItemData);
 
 						if (validationResultOrderItem.status === true) {
-							req.app.get('db').action.addRecord({ table: 'orderitems' }, DBHelpers.getInsertQueryData(orderItemData));
+							req.app.get('db').action.addRecord({ table: 'orderitems' }, dbHelpers.getInsertQueryData(orderItemData));
 						}
 					});
 				});

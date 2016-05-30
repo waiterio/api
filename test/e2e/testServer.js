@@ -20,6 +20,6 @@ describe('server should return', function() {
 		Request(server)
 			.get('/nonexistent')
 			.expect(404)
-			.expect({ status: 404, message: 'Not found' }, done);
+			.expect({ status: 404, message: 'Not Found' }, done);
 	});
 });

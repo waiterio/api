@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * @param data
+ * @returns {*}
+ */
 module.exports.validate = function(data) {
 	if (typeof data !== 'undefined' && data.length > 0) {
 		const lastError = {};

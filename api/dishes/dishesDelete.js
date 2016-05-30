@@ -1,13 +1,13 @@
 'use strict';
 
-const Validator = require('../../common/validator.js');
+const validator = require('../../common/validator.js');
 
 module.exports.deleteDish = function(req, res) {
 	const dishId = parseInt(req.params.id, 10);
 	const dishData = [
 		{ field: 'id', input: dishId, rules: { notEmpty: true, type: 'number' } }
 	];
-	const validationResult = Validator.validate(dishData);
+	const validationResult = validator.validate(dishData);
 
 	if (validationResult.status === true) {
 		req.app.get('db').action.deleteRecord({ table: 'dishes' }, dishId, function() {

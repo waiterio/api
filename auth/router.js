@@ -1,20 +1,20 @@
 'use strict';
 
-const Express = require('express');
-const Router = Express.Router();
-const Authentication = require('./authenticate');
+const express = require('express');
+const router = express.Router();
+const authentication = require('./authenticate');
 
 // POST Requests
-Router.post('/token', function(req, res) {
-	Authentication.getToken(req, res);
+router.post('/token', function(req, res) {
+	authentication.getToken(req, res);
 });
 
-Router.post('/refresh', function(req, res) {
+router.post('/refresh', function(req, res) {
 	res.status(501).json({ status: 501, message: 'Not implemented' });
 });
 
-Router.post('/revoke', function(req, res) {
+router.post('/revoke', function(req, res) {
 	res.status(200).json({ status: 200, message: 'Success' });
 });
 
-module.exports = Router;
+module.exports = router;

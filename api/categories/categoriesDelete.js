@@ -1,13 +1,13 @@
 'use strict';
 
-const Validator = require('../../common/validator.js');
+const validator = require('../../common/validator.js');
 
 module.exports.removeCategory = function(req, res) {
 	const categoryId = parseInt(req.params.id, 10);
 	const categoryData = [
 		{ field: 'id', input: categoryId, rules: { notEmpty: true, type: 'number' } }
 	];
-	const validationResult = Validator.validate(categoryData);
+	const validationResult = validator.validate(categoryData);
 
 	if (validationResult.status === true) {
 		req.app.get('db').action.deleteRecord({ table: 'categories' }, categoryId, function() {

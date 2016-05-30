@@ -1,30 +1,29 @@
 'use strict';
 
 // NPM Modules
-const BodyParser = require('body-parser');
-const Compression = require('compression');
-const CrossOrigin = require('cors');
-const Express = require('express');
+const bodyParser = require('body-parser');
+const express = require('express');
 
 // Custom Modules
-const Log = require('./common/logging.js');
-const RequestValidation = require('./auth/validateRequest');
-const Settings = require('./settings.js');
-const Database = require('./common/sqlite.js')({ database: Settings.database, environment: Settings.environment });
+const log = require('./common/logging.js');
+const requestValidation = require('./auth/validateRequest');
+const settings = require('./settings.js');
+const database = require('./common/sqlite.js')({ database: settings.database, environment: settings.environment });
 
-const server = Express();
+const server = express();
 
 // Setting Global Objects
-server.set('db', Database);
-server.set('log', Log);
+server.set('db', database);
+server.set('log', log);
 
 // Middleware
-server.use(BodyParser.json());
-server.use(Compression({}));
-server.use(CrossOrigin());
-server.use('/api/*', RequestValidation);
+server.use(bodyParser.json());
+server.use('/api/*', requestValidation);
+if (settings.allowCrossOrigin === true) {
+	server.use(require('cors')());
+}
 
-// Authentication Routes
+// authentication Routes
 server.use('/auth', require('./auth/router.js'));
 
 // Resource related Routes
@@ -35,11 +34,11 @@ server.use('/api/categories', require('./api/categories/router.js'));
 
 // Default Route
 server.use(function(req, res) {
-	res.status(404).json({ status: 404, message: 'Not found' });
+	res.status(404).json({ status: 404, message: 'Not Found' });
 });
 
-server.listen(process.env.PORT || Settings.port, function() {
-	Log.info('server started in %s environment', Settings.environment, { server: this.address() });
+server.listen(process.env.PORT || settings.port, function() {
+	log.info('server started in %s environment', settings.environment, { server: this.address() });
 });
 
 module.exports = server;

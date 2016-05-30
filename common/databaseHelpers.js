@@ -77,6 +77,10 @@ module.exports.getInsertQueryData = function(data) {
 	return { fields: queryFields, values: queryValues, fieldQuery: `(${queryFields.join()})`, valueQuery: `(${queryValues.join()})`, vars: replacementVars };
 };
 
+/**
+ * @param data
+ * @returns {{updateQuery: string, vars: Array}}
+ */
 module.exports.getUpdateQueryData = function(data) {
 	const queryParts = [];
 	const replacementVars = [];
@@ -94,7 +98,6 @@ module.exports.getUpdateQueryData = function(data) {
 };
 
 /**
- *
  * @param limitNumber
  * @returns {string}
  */
@@ -115,7 +118,6 @@ module.exports.getLimitQuery = function(limitNumber) {
 };
 
 /**
- *
  * @param queryOptions
  * @returns {*}
  */
