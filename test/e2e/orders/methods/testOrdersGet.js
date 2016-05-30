@@ -49,27 +49,26 @@ module.exports = function() {
 			.expect({ status: 422, message: 'input for id (\'NaN\') is not of type number' }, done);
 	});
 
-	it('return a all orders', function(done) {
+	it('return multiple orders', function(done) {
+		const consistentTimestamp = new Date().getTime();
+
 		server.get('db').db.serialize(function() {
 			const addOrderQuery = 'INSERT INTO orders (tablenumber, ordertimestamp) VALUES (?, ?)';
-			const consistentTimestamp = new Date().getTime();
 
 			server.get('db').db.run(addOrderQuery, [ 1, consistentTimestamp ]);
-			server.get('db').db.run(addOrderQuery, [ 4, consistentTimestamp ]);
-			server.get('db').db.run(addOrderQuery, [ 5, consistentTimestamp ]);
+			server.get('db').db.run(addOrderQuery, [ 4, consistentTimestamp ], function() {
+				const expectedResultList = [
+					{ id: 1, notes: null, ordertimestamp: consistentTimestamp, servingtimestamp: null, tablenumber: 1 },
+					{ id: 2, notes: null, ordertimestamp: consistentTimestamp, servingtimestamp: null, tablenumber: 4 }
+				];
 
-			const expectedResultList = [
-				{ id: 1, notes: null, ordertimestamp: consistentTimestamp, servingtimestamp: null, tablenumber: 1 },
-				{ id: 2, notes: null, ordertimestamp: consistentTimestamp, servingtimestamp: null, tablenumber: 4 },
-				{ id: 3, notes: null, ordertimestamp: consistentTimestamp, servingtimestamp: null, tablenumber: 5 }
-			];
-
-			Request(server)
-				.get('/api/orders/')
-				.expect('Access-Control-Allow-Origin', '*')
-				.expect('Content-Type', /json/)
-				.expect(200)
-				.expect(expectedResultList,done);
+				Request(server)
+					.get('/api/orders/')
+					.expect('Access-Control-Allow-Origin', '*')
+					.expect('Content-Type', /json/)
+					.expect(200)
+					.expect(expectedResultList, done);
+			});
 		});
 	});
 };
