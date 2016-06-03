@@ -4,7 +4,7 @@ const jsonWebToken = require('jwt-simple');
 const settings = require('../settings');
 
 module.exports = function(req, res, next) {
-	req.app.get('log').info(`${req.method} ${req.originalUrl}`);
+	req.app.get('log').route(`${req.method} ${req.originalUrl}`);
 
 	const accessToken = (req.body && req.body.access_token) || req.headers[ 'access-token' ];
 

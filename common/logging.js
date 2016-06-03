@@ -10,19 +10,27 @@ const settings = require('../settings.js');
 function getLogger() {
 	const loggerObject = new (winston.Logger)({
 		levels: {
-			data: 1,
-			info: 2,
-			warn: 3,
-			error: 4
+			trace: 0,
+			debug: 1,
+			route: 2,
+			data: 3,
+			help: 4,
+			info: 5,
+			warn: 6,
+			error: 7
 		},
 		colors: {
-			data: 'green',
-			info: 'blue',
+			trace: 'grey',
+			debug: 'cyan',
+			route: 'blue',
+			data: 'grey',
+			help: 'magenta',
+			info: 'green',
 			warn: 'yellow',
 			error: 'red'
 		},
 		transports: [
-			new (winston.transports.Console)({ name: 'console-log', colorize: true }),
+			new (winston.transports.Console)({ name: 'console-log', colorize: true, silent: false, level: 'error'}),
 			new (winston.transports.File)({ name: 'file-log', filename: './logs/general.log' })
 		]
 	});

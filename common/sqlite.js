@@ -23,10 +23,13 @@ module.exports = function(options) {
 		database = new sqlite.Database(options.database);
 		log.info('connection to database established', { file: database.filename, mode: database.mode });
 	} else {
+		log.error('no database file given');
 		throw new Error('no database file given');
 	}
 
 	if (options.database === ':memory:') {
+		log.warn('database resides in memory; no changes will be saved');
+		log.data('preparing database', { file: './bootstrap_db.sql' });
 		database.exec(fs.readFileSync('./bootstrap_db.sql', 'utf-8'));
 	}
 

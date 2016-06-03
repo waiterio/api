@@ -17,9 +17,11 @@ server.set('db', database);
 server.set('log', log);
 
 // Middleware
+server.use(function(req, res, next) { console.log('------------------------------------------------'); next(); });
 server.use(bodyParser.json());
 server.use('/api/*', requestValidation);
 if (settings.allowCrossOrigin === true) {
+	log.info('enabling cross origin resource sharing for everyone');
 	server.use(require('cors')());
 }
 
@@ -38,7 +40,19 @@ server.use(function(req, res) {
 });
 
 server.listen(process.env.PORT || settings.port, function() {
-	log.info('server started in %s environment', settings.environment, { server: this.address() });
+	log.info('%s server started', settings.environment, { server: this.address(), environment: settings.environment });
 });
+
+
+// console.log('------------------------------------------');
+// log.trace('logging');
+// log.debug('logging');
+// log.route('logging');
+// log.data('logging');
+// log.help('logging');
+// log.info('logging');
+// log.warn('logging');
+// log.error('logging');
+// console.log('------------------------------------------');
 
 module.exports = server;
